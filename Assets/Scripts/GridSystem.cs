@@ -23,7 +23,7 @@ public class GridSystem : MonoBehaviour
     public float cellSize; // Size of each cell
     public GridCell[,] gridArray; // The grid itself
 
-    public Tilemap tilemap; // Reference to the Tilemap component
+    public Tilemap grassTilemap;
 
     public TileBase grassTile; // Reference to the grass Tile
 
@@ -47,7 +47,6 @@ public class GridSystem : MonoBehaviour
         cellSize = 1.0f; // Example value
         InitializeGrid();
         RenderGrid();
-        OnDrawGizmos();
     }
 
     // Create a method to initialize the grid
@@ -75,16 +74,16 @@ public class GridSystem : MonoBehaviour
     // Method to render the grid
     private void RenderGrid()
     {
-        if (tilemap != null && grassTile != null)
+        if (grassTilemap != null && grassTile != null)
         {
-            tilemap.ClearAllTiles();
+            grassTilemap.ClearAllTiles();
 
             for (int x = 0; x < gridArray.GetLength(0); x++)
             {
                 for (int y = 0; y < gridArray.GetLength(1); y++)
                 {
                     Vector3Int tilePosition = new Vector3Int(x, y, 0);
-                    tilemap.SetTile(tilePosition, grassTile);
+                    grassTilemap.SetTile(tilePosition, grassTile);
                 }
             }
         }
