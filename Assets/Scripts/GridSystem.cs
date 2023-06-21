@@ -89,20 +89,6 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    void OnDrawGizmos()
-    {
-        if (gridArray != null)
-        {
-            Debug.Log(gridArray.Length + " A");
-            foreach (GridCell cell in gridArray)
-            {
-
-                Gizmos.color = cell.walkable ? Color.green : Color.red; // Green for walkable cells, red for non-walkable cells
-                Gizmos.DrawCube(cell.worldPosition, Vector3.one * (cellSize - 0.1f)); // Subtracting a small amount to create a gap between cells
-            }
-        }
-    }
-
     // Update is called once per frame
     void Update()
     {

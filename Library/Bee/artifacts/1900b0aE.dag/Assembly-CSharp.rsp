@@ -375,9 +375,9 @@
 -analyzer:"C:/Program Files/Unity 2022.3.2f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Scripts/FireTowerScript.cs"
 "Assets/Scripts/GameManager.cs"
-"Assets/Scripts/GridCellBehaviour.cs"
 "Assets/Scripts/GridSystem.cs"
 "Assets/Scripts/LevelManager.cs"
+"Assets/Scripts/Pathfinder.cs"
 "Assets/Scripts/TileScript.cs"
 -langversion:9.0
 

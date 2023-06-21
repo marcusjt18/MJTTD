@@ -6,14 +6,34 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    private static LevelManager instance;
+
+    // Access the singleton instance of LevelManager
+    public static LevelManager Instance
+    {
+        get { return instance; }
+    }
+
+
     public GameObject tilePrefab;
-    public int width, height;
+    private int width = 15;
+    private int height = 10;
 
     private TileScript[,] tiles;
 
-    void Start()
+    void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+
         CreateLevel();
+        
     }
 
     private void CreateLevel()
@@ -40,6 +60,48 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
+
+    public List<TileScript> GetNeighbours(TileScript tile)
+    {
+        List<TileScript> neighbours = new List<TileScript>();
+
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                if (x == 0 && y == 0)
+                {
+                    continue; // This is the tile itself, not a neighbour
+                }
+
+                int checkX = tile.X + x;
+                int checkY = tile.Y + y;
+
+                // Check if the neighbour is inside the grid
+                if (checkX >= 0 && checkX < width && checkY >= 0 && checkY < height)
+                {
+                    // Check if there is a tower in a diagonally adjacent tile, if so, skip this iteration
+                    if (Mathf.Abs(x) == 1 && Mathf.Abs(y) == 1)
+                    {
+                        // Checking the tiles that would be skipped if we moved diagonally
+                        TileScript adjacent1 = tiles[tile.X + x, tile.Y];
+                        TileScript adjacent2 = tiles[tile.X, tile.Y + y];
+
+                        if (!adjacent1.IsWalkable || !adjacent2.IsWalkable)
+                        {
+                            continue; // Skip this neighbour as it would mean moving diagonally adjacent to a tower
+                        }
+                    }
+
+                    neighbours.Add(tiles[checkX, checkY]);
+                }
+            }
+        }
+
+        return neighbours;
+    }
+
+
 
     public TileScript GetTile(int x, int y)
     {
