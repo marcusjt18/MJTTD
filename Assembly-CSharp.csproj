@@ -61,9 +61,12 @@
     <Compile Include="Assets\Scripts\Pathfinder.cs" />
     <Compile Include="Assets\Scripts\LevelManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Towers\TowerPlacer.cs" />
+    <Compile Include="Assets\Scripts\Towers\Tower.cs" />
+    <Compile Include="Assets\Scripts\DepthSorter.cs" />
     <Compile Include="Assets\Scripts\TileScript.cs" />
     <Compile Include="Assets\Scripts\FireTowerScript.cs" />
-    <Compile Include="Assets\Scripts\GridSystem.cs" />
+    <Compile Include="Assets\Scripts\Towers\Specific Towers\BasicTower.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Pixel Monster Pack\notes.txt" />

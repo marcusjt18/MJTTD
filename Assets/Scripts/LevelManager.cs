@@ -19,8 +19,11 @@ public class LevelManager : MonoBehaviour
 
     public GameObject tilePrefab;
 
+    public GameObject startPortalPrefab;
+    public GameObject endPortalPrefab;
+
     public GameObject rockPrefab;
-    private float rockProbability = 0.15f; // chance of rock
+    private float rockProbability = 0.14f; // chance of rock
 
     private int width = 15;
     private int height = 10;
@@ -46,6 +49,7 @@ public class LevelManager : MonoBehaviour
         CreateLevel();
         startTile = GetTile(0, 0);
         endTile = GetTile(Width-1, Height-1);
+        DrawPortals();
         StartCoroutine(GenerateRocksAndFindPath());
 
     }
@@ -134,10 +138,30 @@ public class LevelManager : MonoBehaviour
                     // Make sure that a path is still possible with the rock in place
                     currentTile.IsWalkable = false;
                     GameObject rock = Instantiate(rockPrefab, currentTile.transform.position + new Vector3(0, 0, -1), Quaternion.identity);
+                    rock.AddComponent<DepthSorter>();
                     rock.tag = "Rock";
                 }
             }
         }
+    }
+
+    private void DrawPortals()
+    {
+        for (int i = 0; i < Width; i++)
+        {
+            for (int j = 0; j < Height; j++)
+            {
+                if (tiles[i, j] == startTile)
+                {
+                    Instantiate(startPortalPrefab, tiles[i, j].transform.position + new Vector3(0, 0, -1), Quaternion.identity);
+                }
+                else if (tiles[i, j] == endTile)
+                {
+                    Instantiate(endPortalPrefab, tiles[i, j].transform.position + new Vector3(0, 0, -1), Quaternion.identity);
+                }
+            }
+        }
+
     }
 
 

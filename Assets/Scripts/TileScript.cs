@@ -66,7 +66,8 @@ public class TileScript : MonoBehaviour
                 Vector3 tilePosition = transform.position;
                 Vector3 towerPosition = new Vector3(tilePosition.x, tilePosition.y + GameManager.Instance.TowerPrefab.transform.localScale.y / 2, tilePosition.z);
                 Debug.Log(x + " " + y);
-                Instantiate(GameManager.Instance.TowerPrefab, towerPosition, Quaternion.identity);
+                GameObject tower = Instantiate(GameManager.Instance.TowerPrefab, towerPosition, Quaternion.identity);
+                tower.AddComponent<DepthSorter>();
                 hasTower = true;
                 isWalkable = false;
             }
