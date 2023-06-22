@@ -12,10 +12,9 @@ public class GameManager : MonoBehaviour
         get { return instance; }
     }
 
-    public GameObject TowerPrefab { get => towerPrefab; set => towerPrefab = value; }
-
     [SerializeField]
-    private GameObject towerPrefab;
+    private TowerPlacer towerPlacer;
+    public TowerPlacer TowerPlacer { get => towerPlacer; }
 
     // This method is called before the first frame update
     void Awake()

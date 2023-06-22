@@ -380,6 +380,7 @@
 "Assets/Scripts/Pathfinder.cs"
 "Assets/Scripts/TileScript.cs"
 "Assets/Scripts/Towers/Specific Towers/BasicTower.cs"
+"Assets/Scripts/Towers/Specific Towers/WolfTower.cs"
 "Assets/Scripts/Towers/Tower.cs"
 "Assets/Scripts/Towers/TowerPlacer.cs"
 -langversion:9.0

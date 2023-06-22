@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\Pathfinder.cs" />
     <Compile Include="Assets\Scripts\LevelManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Towers\Specific Towers\WolfTower.cs" />
     <Compile Include="Assets\Scripts\Towers\TowerPlacer.cs" />
     <Compile Include="Assets\Scripts\Towers\Tower.cs" />
     <Compile Include="Assets\Scripts\DepthSorter.cs" />

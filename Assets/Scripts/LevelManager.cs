@@ -23,7 +23,7 @@ public class LevelManager : MonoBehaviour
     public GameObject endPortalPrefab;
 
     public GameObject rockPrefab;
-    private float rockProbability = 0.14f; // chance of rock
+    private float rockProbability = 0.25f; // chance of rock
 
     private int width = 15;
     private int height = 10;

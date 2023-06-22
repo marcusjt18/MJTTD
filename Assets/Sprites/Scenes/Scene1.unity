@@ -215,6 +215,53 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1095482718
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1095482720}
+  - component: {fileID: 1095482719}
+  m_Layer: 0
+  m_Name: TowerPlacer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1095482719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095482718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 529e2cdb9cbaeb14298e8ee56237c036, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerPrefabs:
+  - {fileID: 430153400284147140, guid: 3c5b5e91ae9713d49b83250ee480b108, type: 3}
+  - {fileID: 6371927449753071763, guid: e0e4d7699fea7734783f92f6f0e38eb8, type: 3}
+--- !u!4 &1095482720
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095482718}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.525157, y: 4.258251, z: -0.2752815}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1350527365
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,7 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c47039435ba4c4046950a2bc44e83005, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerPrefab: {fileID: 576017037598771555, guid: 216c037c06c0e804897108300af8f1cd, type: 3}
+  towerPlacer: {fileID: 1095482719}
 --- !u!1 &1667127531
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,7 +380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0d411aca5366e446a1769c9bfc89846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 3687432263152362345, guid: 6ddaf1fad16d66249890dee37631c117, type: 3}
+  tilePrefab: {fileID: 2409284604853107760, guid: 4a831e17189b1bb45903d1f711fa0f74, type: 3}
   startPortalPrefab: {fileID: 6721211242881586212, guid: 1d9a77de8229e1b42933a9b458faaee8, type: 3}
   endPortalPrefab: {fileID: 8600761570473318527, guid: 7be87d0fa38bbf34db19ea4d1e1c5ab5, type: 3}
   rockPrefab: {fileID: 2901627803744965749, guid: b4564b7809feb894e85a0bfa0b051d3c, type: 3}

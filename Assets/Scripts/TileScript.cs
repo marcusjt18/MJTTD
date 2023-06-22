@@ -57,21 +57,23 @@ public class TileScript : MonoBehaviour
     }
 
 
-    private void OnMouseOver()
+private void OnMouseOver()
+{
+    if (Input.GetMouseButtonDown(0))
     {
-        if (Input.GetMouseButtonDown(0))
+        if (!HasTower && IsWalkable)
         {
-            if (!hasTower && isWalkable)
-            {
-                Vector3 tilePosition = transform.position;
-                Vector3 towerPosition = new Vector3(tilePosition.x, tilePosition.y + GameManager.Instance.TowerPrefab.transform.localScale.y / 2, tilePosition.z);
-                Debug.Log(x + " " + y);
-                GameObject tower = Instantiate(GameManager.Instance.TowerPrefab, towerPosition, Quaternion.identity);
-                tower.AddComponent<DepthSorter>();
-                hasTower = true;
-                isWalkable = false;
-            }
+            string currentTower = GameManager.Instance.TowerPlacer.CurrentTowerId;
+            Vector3 tilePosition = transform.position;
+            Vector3 towerPosition = new Vector3(tilePosition.x, tilePosition.y + GameManager.Instance.TowerPlacer.TowerDict[currentTower].transform.localScale.y / 2, tilePosition.z);
+
+            // Call the PlaceTower method of the TowerPlacer.
+            GameManager.Instance.TowerPlacer.PlaceTower(towerPosition);
+            HasTower = true;
+            IsWalkable = false;
         }
     }
+}
+
 
 }
