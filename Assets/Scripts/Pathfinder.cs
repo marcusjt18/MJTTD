@@ -21,6 +21,16 @@ public class Pathfinder : MonoBehaviour
 
     public List<TileScript> FindPath(TileScript startTile, TileScript endTile)
     {
+        // First clear any existing overlays
+        for (int i = 0; i < levelManager.Width; i++)
+        {
+            for (int j = 0; j < levelManager.Height; j++)
+            {
+                levelManager.GetTile(i, j).HideOverlay();
+            }
+        }
+
+
         startTile.ShowOverlay(startColor);
         endTile.ShowOverlay(endColor);
 
@@ -128,10 +138,15 @@ public class Pathfinder : MonoBehaviour
             TileScript startTile = levelManager.GetTile(0, 0);
             TileScript endTile = levelManager.GetTile(14, 9);
             List<TileScript> path = FindPath(startTile, endTile);
-            foreach (TileScript tile in path)
+
+            if(path != null)
             {
-                Debug.Log($"Tile at position: {tile.transform.position}");
+                foreach (TileScript tile in path)
+                {
+                    Debug.Log($"Tile at position: {tile.transform.position}");
+                }
             }
+
         }
     }
 }

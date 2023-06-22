@@ -14,12 +14,23 @@ public class LevelManager : MonoBehaviour
         get { return instance; }
     }
 
+    public int Width { get => width; set => width = value; }
+    public int Height { get => height; set => height = value; }
 
     public GameObject tilePrefab;
+
+    public GameObject rockPrefab;
+    private float rockProbability = 0.15f; // chance of rock
+
     private int width = 15;
     private int height = 10;
 
+    private TileScript startTile;
+    private TileScript endTile;
+
     private TileScript[,] tiles;
+
+    public Pathfinder pathFinder;
 
     void Awake()
     {
@@ -33,16 +44,20 @@ public class LevelManager : MonoBehaviour
         }
 
         CreateLevel();
-        
+        startTile = GetTile(0, 0);
+        endTile = GetTile(Width-1, Height-1);
+        StartCoroutine(GenerateRocksAndFindPath());
+
     }
 
     private void CreateLevel()
     {
-        tiles = new TileScript[width, height];
+        tiles = new TileScript[Width, Height];
 
-        for (int i = 0; i < width; i++)
+
+        for (int i = 0; i < Width; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < Height; j++)
             {
                 // Instantiate a new Tile at each grid space, with no rotation.
                 GameObject newTile = Instantiate(tilePrefab, new Vector3(i, j, 0), Quaternion.identity);
@@ -57,9 +72,75 @@ public class LevelManager : MonoBehaviour
 
                 // Add the TileScript to the tiles array for later reference
                 tiles[i, j] = tileScript;
+
+            }
+        }
+
+    }
+
+    IEnumerator GenerateRocksAndFindPath()
+    {
+        yield return null; // Wait for one frame
+        int attempts = 0;
+        List<TileScript> path = null;
+        do
+        {
+            if (attempts > 100)
+            {
+                break;
+            }
+            attempts++;
+            ClearRocks();
+            GenerateRocks();
+            path = pathFinder.FindPath(startTile, endTile);
+        } while (path == null || path.Count == 0);
+        Debug.Log("ATTEMPTS: " + attempts);
+    }
+
+    private void ClearRocks()
+    {
+        foreach (var rock in GameObject.FindGameObjectsWithTag("Rock"))
+        {
+            Destroy(rock);
+        }
+
+        // Reset all tiles to be walkable
+        for (int i = 0; i < Width; i++)
+        {
+            for (int j = 0; j < Height; j++)
+            {
+                tiles[i, j].IsWalkable = true;
             }
         }
     }
+
+    private void GenerateRocks()
+    {
+        for (int i = 0; i < Width; i++)
+        {
+            for (int j = 0; j < Height; j++)
+            {
+                TileScript currentTile = tiles[i, j];
+
+                // Do not add rocks to the start or end tiles
+                if (currentTile == startTile || currentTile == endTile)
+                {
+                    continue;
+                }
+
+                // 20% chance to spawn a rock
+                if (UnityEngine.Random.value < rockProbability)
+                {
+                    // Make sure that a path is still possible with the rock in place
+                    currentTile.IsWalkable = false;
+                    GameObject rock = Instantiate(rockPrefab, currentTile.transform.position + new Vector3(0, 0, -1), Quaternion.identity);
+                    rock.tag = "Rock";
+                }
+            }
+        }
+    }
+
+
 
     public List<TileScript> GetNeighbours(TileScript tile)
     {
@@ -78,7 +159,7 @@ public class LevelManager : MonoBehaviour
                 int checkY = tile.Y + y;
 
                 // Check if the neighbour is inside the grid
-                if (checkX >= 0 && checkX < width && checkY >= 0 && checkY < height)
+                if (checkX >= 0 && checkX < Width && checkY >= 0 && checkY < Height)
                 {
                     // Check if there is a tower in a diagonally adjacent tile, if so, skip this iteration
                     if (Mathf.Abs(x) == 1 && Mathf.Abs(y) == 1)
@@ -105,7 +186,7 @@ public class LevelManager : MonoBehaviour
 
     public TileScript GetTile(int x, int y)
     {
-        if (x < 0 || x >= width || y < 0 || y >= height)
+        if (x < 0 || x >= Width || y < 0 || y >= Height)
         {
             return null; // return null if the x or y coordinate is out of bounds
         }

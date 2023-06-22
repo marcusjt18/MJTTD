@@ -334,6 +334,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 3687432263152362345, guid: 6ddaf1fad16d66249890dee37631c117, type: 3}
+  rockPrefab: {fileID: 2901627803744965749, guid: b4564b7809feb894e85a0bfa0b051d3c, type: 3}
+  pathFinder: {fileID: 1667127533}
 --- !u!4 &2015101459
 Transform:
   m_ObjectHideFlags: 0
