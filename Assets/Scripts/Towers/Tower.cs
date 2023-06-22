@@ -5,11 +5,19 @@ using UnityEngine;
 public abstract class Tower : MonoBehaviour
 {
     [SerializeField]
-    private string id; // The ID of this tower
-    // Properties common to all towers, like range and damage.
-    public float Range { get; set; }
-    public int Damage { get; set; }
-    public string Id { get => id; }
+    private string id;
+    [SerializeField]
+    private float range = 10f;
+    [SerializeField]
+    private int damage;
+    [SerializeField]
+    private GameObject prefab;
+
+    public string Id { get => id; set => id = value; }
+    public float Range { get => range; set => range = value; }
+    public int Damage { get => damage; set => damage = value; }
+    public GameObject Prefab { get => prefab; set => prefab = value; }
+
 
     // An abstract method for firing at enemies.
     public abstract void FireAtEnemy();

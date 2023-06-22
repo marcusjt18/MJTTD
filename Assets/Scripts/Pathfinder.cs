@@ -12,27 +12,8 @@ public class Pathfinder : MonoBehaviour
 
     }
 
-    // Colors for different types of nodes.
-    private Color startColor = Color.green;
-    private Color endColor = Color.red;
-    private Color openSetColor = Color.blue;
-    private Color closedSetColor = Color.gray;
-    private Color pathColor = Color.yellow;
-
     public List<TileScript> FindPath(TileScript startTile, TileScript endTile)
     {
-        // First clear any existing overlays
-        for (int i = 0; i < levelManager.Width; i++)
-        {
-            for (int j = 0; j < levelManager.Height; j++)
-            {
-                levelManager.GetTile(i, j).HideOverlay();
-            }
-        }
-
-
-        startTile.ShowOverlay(startColor);
-        endTile.ShowOverlay(endColor);
 
         List<TileScript> openSet = new List<TileScript>();
         HashSet<TileScript> closedSet = new HashSet<TileScript>();
@@ -52,27 +33,24 @@ public class Pathfinder : MonoBehaviour
             openSet.Remove(currentTile);
             closedSet.Add(currentTile);
 
-            // Show the overlay on the nodes in the open set.
-            foreach (TileScript tile in openSet)
-            {
-                tile.ShowOverlay(openSetColor);
-            }
-
-            // Show the overlay on the nodes in the closed set.
-            foreach (TileScript tile in closedSet)
-            {
-                tile.ShowOverlay(closedSetColor);
-            }
-
             if (currentTile == endTile)
             {
                 // Get the final path.
                 List<TileScript> path = RetracePath(startTile, endTile);
 
+                // First clear any existing overlays
+                for (int i = 0; i < levelManager.Width; i++)
+                {
+                    for (int j = 0; j < levelManager.Height; j++)
+                    {
+                        levelManager.GetTile(i, j).HideOverlay();
+                    }
+                }
+
                 // Color the final path.
                 foreach (TileScript tile in path)
                 {
-                    tile.ShowOverlay(pathColor);
+                    tile.ShowOverlay();
                 }
                 // Return the final path.
                 return path;
@@ -133,21 +111,21 @@ public class Pathfinder : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            TileScript startTile = levelManager.GetTile(0, 0);
-            TileScript endTile = levelManager.GetTile(14, 9);
-            List<TileScript> path = FindPath(startTile, endTile);
+        //if (Input.GetKey(KeyCode.Space))
+        //{
+        //    TileScript startTile = levelManager.GetTile(0, 0);
+        //    TileScript endTile = levelManager.GetTile(14, 9);
+        //    List<TileScript> path = FindPath(startTile, endTile);
 
-            if(path != null)
-            {
-                foreach (TileScript tile in path)
-                {
-                    Debug.Log($"Tile at position: {tile.transform.position}");
-                }
-            }
+        //    if(path != null)
+        //    {
+        //        foreach (TileScript tile in path)
+        //        {
+        //            Debug.Log($"Tile at position: {tile.transform.position}");
+        //        }
+        //    }
 
-        }
+        //}
     }
 }
 

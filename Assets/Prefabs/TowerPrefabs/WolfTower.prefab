@@ -130,3 +130,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: wolf
+  range: 10
+  damage: 0
+  prefab: {fileID: 4589795718836687180}

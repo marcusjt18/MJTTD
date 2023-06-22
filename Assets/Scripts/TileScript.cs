@@ -8,17 +8,21 @@ public class TileScript : MonoBehaviour
     private bool hasTower = false;
     private int x;
     private int y;
-    private Vector3 worldPosition;
+    private LevelManager levelManager;
 
     public bool IsWalkable { get => isWalkable; set => isWalkable = value; }
     public bool HasTower { get => hasTower; set => hasTower = value; }
     public int X { get => x; set => x = value; }
     public int Y { get => y; set => y = value; }
-    public Vector3 WorldPosition { get => worldPosition; set => worldPosition = value; }
 
     public int gCost; // cost from the start node to this node
     public int hCost; // heuristic cost from this node to the end node
     public TileScript parent; // parent node of this node in the path
+
+    private void Awake()
+    {
+        levelManager = LevelManager.Instance;
+    }
 
     public int FCost
     {
@@ -34,15 +38,12 @@ public class TileScript : MonoBehaviour
     // Reference to the current overlay object.
     private GameObject overlay;
 
-    public void ShowOverlay(Color color)
+    public void ShowOverlay()
     {
         if (overlay == null)
         {
             overlay = Instantiate(overlayPrefab, transform.position + new Vector3(0, 0, -1), Quaternion.identity, transform);
         }
-
-        SpriteRenderer overlayRenderer = overlay.GetComponent<SpriteRenderer>();
-        overlayRenderer.color = color;
     }
 
 
@@ -57,23 +58,32 @@ public class TileScript : MonoBehaviour
     }
 
 
-private void OnMouseOver()
-{
-    if (Input.GetMouseButtonDown(0))
+    private void OnMouseOver()
     {
-        if (!HasTower && IsWalkable)
+        if (Input.GetMouseButtonDown(0) && !GameManager.Instance.WaveOngoing)
         {
-            string currentTower = GameManager.Instance.TowerPlacer.CurrentTowerId;
-            Vector3 tilePosition = transform.position;
-            Vector3 towerPosition = new Vector3(tilePosition.x, tilePosition.y + GameManager.Instance.TowerPlacer.TowerDict[currentTower].transform.localScale.y / 2, tilePosition.z);
+            if (!HasTower && IsWalkable)
+            {
+                isWalkable = false;
+                if (levelManager.PathFinder.FindPath(levelManager.StartTile, levelManager.EndTile) == null)
+                {
+                    isWalkable = true;
+                    Debug.Log("This would hinder the path completely. ILLEGAL!!!");
+                }
+                else
+                {
+                    string currentTower = GameManager.Instance.TowerPlacer.CurrentTowerId;
+                    Vector3 tilePosition = transform.position;
+                    Vector3 towerPosition = new Vector3(tilePosition.x, tilePosition.y + GameManager.Instance.TowerPlacer.TowerDict[currentTower].transform.localScale.y / 2, tilePosition.z);
 
-            // Call the PlaceTower method of the TowerPlacer.
-            GameManager.Instance.TowerPlacer.PlaceTower(towerPosition);
-            HasTower = true;
-            IsWalkable = false;
+                    // Call the PlaceTower method of the TowerPlacer.
+                    GameManager.Instance.TowerPlacer.PlaceTower(towerPosition);
+                    HasTower = true;
+                }
+            
+            }
         }
     }
-}
 
 
 }

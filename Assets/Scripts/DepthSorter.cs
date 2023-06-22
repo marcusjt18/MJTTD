@@ -6,6 +6,11 @@ public class DepthSorter : MonoBehaviour
 {
     void Start()
     {
+        UpdateOrder();
+    }
+
+    public void UpdateOrder()
+    {
         // First, try to get the SpriteRenderer from the current GameObject
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -19,7 +24,7 @@ public class DepthSorter : MonoBehaviour
         if (spriteRenderer != null)
         {
             float yPos = transform.position.y;
-            spriteRenderer.sortingOrder = -(int)(yPos);
+            spriteRenderer.sortingOrder = -(int)(yPos)*100;
         }
         else
         {

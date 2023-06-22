@@ -16,6 +16,9 @@ public class LevelManager : MonoBehaviour
 
     public int Width { get => width; set => width = value; }
     public int Height { get => height; set => height = value; }
+    public TileScript StartTile { get => startTile; set => startTile = value; }
+    public TileScript EndTile { get => endTile; set => endTile = value; }
+    public Pathfinder PathFinder { get => pathFinder; set => pathFinder = value; }
 
     public GameObject tilePrefab;
 
@@ -23,9 +26,11 @@ public class LevelManager : MonoBehaviour
     public GameObject endPortalPrefab;
 
     public GameObject rockPrefab;
-    private float rockProbability = 0.25f; // chance of rock
+    private float rockProbability = 0.20f; // chance of rock
 
+    [SerializeField]
     private int width = 15;
+    [SerializeField]
     private int height = 10;
 
     private TileScript startTile;
@@ -33,7 +38,8 @@ public class LevelManager : MonoBehaviour
 
     private TileScript[,] tiles;
 
-    public Pathfinder pathFinder;
+    [SerializeField]
+    private Pathfinder pathFinder;
 
     void Awake()
     {
@@ -47,8 +53,8 @@ public class LevelManager : MonoBehaviour
         }
 
         CreateLevel();
-        startTile = GetTile(0, 0);
-        endTile = GetTile(Width-1, Height-1);
+        StartTile = GetTile(0, 0);
+        EndTile = GetTile(Width-1, Height-1);
         DrawPortals();
         StartCoroutine(GenerateRocksAndFindPath());
 
@@ -96,7 +102,7 @@ public class LevelManager : MonoBehaviour
             attempts++;
             ClearRocks();
             GenerateRocks();
-            path = pathFinder.FindPath(startTile, endTile);
+            path = PathFinder.FindPath(StartTile, EndTile);
         } while (path == null || path.Count == 0);
         Debug.Log("ATTEMPTS: " + attempts);
     }
@@ -127,7 +133,7 @@ public class LevelManager : MonoBehaviour
                 TileScript currentTile = tiles[i, j];
 
                 // Do not add rocks to the start or end tiles
-                if (currentTile == startTile || currentTile == endTile)
+                if (currentTile == StartTile || currentTile == EndTile)
                 {
                     continue;
                 }
@@ -151,13 +157,15 @@ public class LevelManager : MonoBehaviour
         {
             for (int j = 0; j < Height; j++)
             {
-                if (tiles[i, j] == startTile)
+                if (tiles[i, j] == StartTile)
                 {
-                    Instantiate(startPortalPrefab, tiles[i, j].transform.position + new Vector3(0, 0, -1), Quaternion.identity);
+                    GameObject sp = Instantiate(startPortalPrefab, tiles[i, j].transform.position + new Vector3(0, 0, -1), Quaternion.identity);
+                    sp.AddComponent<DepthSorter>();
                 }
-                else if (tiles[i, j] == endTile)
+                else if (tiles[i, j] == EndTile)
                 {
-                    Instantiate(endPortalPrefab, tiles[i, j].transform.position + new Vector3(0, 0, -1), Quaternion.identity);
+                    GameObject ep = Instantiate(endPortalPrefab, tiles[i, j].transform.position + new Vector3(0, 0, -1), Quaternion.identity);
+                    ep.AddComponent<DepthSorter>();
                 }
             }
         }

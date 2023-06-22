@@ -93,6 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4529844208248262362}
+  - component: {fileID: 6664402099005025844}
   m_Layer: 0
   m_Name: DemonRat
   m_TagString: Untagged
@@ -114,5 +115,23 @@ Transform:
   m_Children:
   - {fileID: 1550755191977756094}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6664402099005025844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5742545870747995233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb7a935eb304e8d448e4549d79e27a9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  health: 3
+  prefab: {fileID: 5742545870747995233}
+  id: rat
+  minWave: 1
+  maxWave: 2147483647
