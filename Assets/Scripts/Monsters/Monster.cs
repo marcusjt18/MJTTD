@@ -43,6 +43,12 @@ public abstract class Monster : MonoBehaviour
 
     protected virtual void Update()
     {
+        GetComponent<DepthSorter>().UpdateOrder();
+        if (health <= 0)
+        {
+            Die(false);
+        }
+
         if (currentTileIndex < path.Count)
         {
             transform.position = Vector3.MoveTowards(transform.position, path[currentTileIndex].transform.position, Speed * Time.deltaTime);
@@ -61,8 +67,13 @@ public abstract class Monster : MonoBehaviour
                 }
             }
         }
+        
+    }
 
-        GetComponent<DepthSorter>().UpdateOrder();
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+
     }
 
     private void Die(bool reachedEnd) {
@@ -78,6 +89,8 @@ public abstract class Monster : MonoBehaviour
             GameManager.Instance.WaveOngoing = false;
         }
     }
+
+
 
     // Other common functionality, such as taking damage, dying, etc. can be defined here as well.
 }
