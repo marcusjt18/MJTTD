@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\Monsters\Specific Monsters\DemonRat.cs" />
     <Compile Include="Assets\Scripts\Towers\Tower.cs" />
     <Compile Include="Assets\Scripts\DepthSorter.cs" />
+    <Compile Include="Assets\Scripts\Projectiles\BasicArrow.cs" />
     <Compile Include="Assets\Scripts\TileScript.cs" />
     <Compile Include="Assets\Scripts\FireTowerScript.cs" />
     <Compile Include="Assets\Scripts\Monsters\MonsterSpawner.cs" />

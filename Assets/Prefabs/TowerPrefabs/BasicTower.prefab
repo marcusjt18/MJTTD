@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7230742113956788549}
   - component: {fileID: 430153400284147140}
-  - component: {fileID: -6015535370715221753}
-  m_Layer: 0
+  - component: {fileID: -4921983104499724763}
+  m_Layer: 2
   m_Name: BasicTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,7 +50,10 @@ MonoBehaviour:
   range: 10
   damage: 0
   prefab: {fileID: 7407265443852324103}
---- !u!58 &-6015535370715221753
+  projectilePrefab: {fileID: 416730820919663981, guid: 4962ff6205b6abc41a091d27c1ded56d, type: 3}
+  ProjectilesParent: {fileID: 0}
+  attackSpeed: 1
+--- !u!58 &-4921983104499724763
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -62,7 +65,7 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -95,7 +98,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1722329987265057731}
   - component: {fileID: 396121984084944955}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: basic_tower1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

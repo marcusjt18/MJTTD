@@ -10,6 +10,8 @@ public class TileScript : MonoBehaviour
     private int y;
     private LevelManager levelManager;
 
+    private SpriteRenderer spriteRenderer;
+
     public bool IsWalkable { get => isWalkable; set => isWalkable = value; }
     public bool HasTower { get => hasTower; set => hasTower = value; }
     public int X { get => x; set => x = value; }
@@ -22,6 +24,7 @@ public class TileScript : MonoBehaviour
     private void Awake()
     {
         levelManager = LevelManager.Instance;
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public int FCost
@@ -31,6 +34,8 @@ public class TileScript : MonoBehaviour
             return gCost + hCost;
         }
     }
+
+    public SpriteRenderer SpriteRenderer { get => spriteRenderer; set => spriteRenderer = value; }
 
     // Reference to the overlay prefab.
     public GameObject overlayPrefab;
@@ -60,8 +65,9 @@ public class TileScript : MonoBehaviour
 
     private void OnMouseOver()
     {
+        Debug.Log(spriteRenderer.bounds.size);
         if (Input.GetMouseButtonDown(0) && !GameManager.Instance.WaveOngoing)
-        {
+        {         
             if (!HasTower && IsWalkable)
             {
                 isWalkable = false;

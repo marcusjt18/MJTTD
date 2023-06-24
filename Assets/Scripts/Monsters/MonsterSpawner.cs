@@ -32,7 +32,7 @@ public class MonsterSpawner : MonoBehaviour
             Monster monsterPrefab = monsterDict[id];
 
             // Instantiate the monster.
-            Monster newMonster = Instantiate(monsterPrefab.Prefab, LevelManager.Instance.StartTile.transform.position, Quaternion.identity).GetComponent<Monster>();
+            Monster newMonster = Instantiate(monsterPrefab.Prefab, LevelManager.Instance.StartTile.transform.position, Quaternion.identity, transform).GetComponent<Monster>();
             newMonster.Initialize(path);
             GameManager.Instance.MonsterCounter++;
         }

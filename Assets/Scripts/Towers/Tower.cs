@@ -12,14 +12,34 @@ public abstract class Tower : MonoBehaviour
     private int damage;
     [SerializeField]
     private GameObject prefab;
+
+    [SerializeField]
+    private GameObject projectilePrefab;
+
+    public Transform ProjectilesParent;
+
+
+    [SerializeField]
+    private float attackSpeed = 1.0f;
+
+    // The time since the tower last attacked
+    private float attackCooldown = 0.0f;
+
     public Monster Target { get; set; }
 
     public string Id { get => id; set => id = value; }
     public float Range { get => range; set => range = value; }
     public int Damage { get => damage; set => damage = value; }
     public GameObject Prefab { get => prefab; set => prefab = value; }
+    public GameObject ProjectilePrefab { get => projectilePrefab; set => projectilePrefab = value; }
 
     private List<Monster> monstersInRange = new List<Monster>();
+
+    void Start()
+    {
+        ProjectilesParent = GameObject.Find("ProjectilesParent").transform;
+    }
+
 
     private void Update()
     {
@@ -30,13 +50,24 @@ public abstract class Tower : MonoBehaviour
             GetNewTarget();
         }
 
-        // Now you can use Target to aim and fire the tower's weapon.
-        // But make sure to check if Target is not null before you do so!
+        // If there is a target, the tower can potentially attack
+        if (Target != null)
+        {
+            // If the attack is off cooldown, the tower attacks and the cooldown is reset
+            if (attackCooldown <= 0)
+            {
+                Attack();
+                attackCooldown = attackSpeed;
+            }
+        }
+
+        // Decrease the attack cooldown
+        attackCooldown -= Time.deltaTime;
     }
 
 
     // An abstract method for firing at enemies.
-    public abstract void FireAtEnemy();
+    public abstract void Attack();
 
     public virtual void GetNewTarget()
     {

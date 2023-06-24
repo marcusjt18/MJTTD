@@ -382,6 +382,7 @@
 "Assets/Scripts/Monsters/Specific Monsters/DemonRat.cs"
 "Assets/Scripts/Pathfinder.cs"
 "Assets/Scripts/PathVisibility.cs"
+"Assets/Scripts/Projectiles/BasicArrow.cs"
 "Assets/Scripts/Projectiles/Projectile.cs"
 "Assets/Scripts/TileScript.cs"
 "Assets/Scripts/Towers/Specific Towers/BasicTower.cs"

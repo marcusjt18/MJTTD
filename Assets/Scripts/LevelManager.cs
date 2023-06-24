@@ -25,8 +25,10 @@ public class LevelManager : MonoBehaviour
     public GameObject startPortalPrefab;
     public GameObject endPortalPrefab;
 
+
     public GameObject rockPrefab;
-    private float rockProbability = 0.20f; // chance of rock
+    private float rockProbability = 0.11f; // chance of rock
+    public Transform RockParent;
 
     [SerializeField]
     private int width = 15;
@@ -51,6 +53,7 @@ public class LevelManager : MonoBehaviour
         {
             instance = this;
         }
+        RockParent = GameObject.Find("RockParent").transform;
 
         CreateLevel();
         StartTile = GetTile(0, 0);
@@ -143,7 +146,7 @@ public class LevelManager : MonoBehaviour
                 {
                     // Make sure that a path is still possible with the rock in place
                     currentTile.IsWalkable = false;
-                    GameObject rock = Instantiate(rockPrefab, currentTile.transform.position + new Vector3(0, 0, -1), Quaternion.identity);
+                    GameObject rock = Instantiate(rockPrefab, currentTile.transform.position + new Vector3(0, 0, -1), Quaternion.identity, RockParent);
                     rock.AddComponent<DepthSorter>();
                     rock.tag = "Rock";
                 }
@@ -225,6 +228,26 @@ public class LevelManager : MonoBehaviour
 
         return tiles[x, y];
     }
+
+    public bool IsOutsideBounds(Vector3 position)
+    {
+        // Convert the world position to grid position, plus one tile width/height
+        int x = Mathf.FloorToInt(position.x);
+        int y = Mathf.FloorToInt(position.y);
+
+        // Use GetTile to check if the grid position is valid
+        GameObject tile = GetTile(x, y).gameObject;
+
+        if (tile == null)
+        {
+            return true; // Position is outside of the bounds
+        }
+        return false; // Position is inside the bounds
+    }
+
+
+
+
 
     void Update()
     {

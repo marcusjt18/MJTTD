@@ -5,7 +5,7 @@ using UnityEngine;
 public class WolfTower : Tower
 {
     // Override the FireAtEnemy method.
-    public override void FireAtEnemy()
+    public override void Attack()
     {
         // Implementation for firing at enemy...
     }
