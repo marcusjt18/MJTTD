@@ -39,7 +39,7 @@ public class TowerPlacer : MonoBehaviour
             Tower towerPrefab = TowerDict[CurrentTowerId];
 
             // Instantiate the prefab associated with the tower at the given position.
-            Tower newTower = Instantiate(towerPrefab.Prefab, position, Quaternion.identity).GetComponent<Tower>();
+            Tower newTower = Instantiate(towerPrefab.Prefab, position, Quaternion.identity, transform).GetComponent<Tower>();
             newTower.gameObject.AddComponent<DepthSorter>();
 
             // You could add additional logic here, like subtracting the cost of the tower from the player's resources.

@@ -11,6 +11,10 @@ public abstract class Projectile : MonoBehaviour
     protected Monster target;
     [SerializeField]
     protected float maxDistance = 10f;
+
+    [SerializeField]
+    private GameObject damageTextPrefab;
+
     private Vector3 startPosition;
     private Vector3 direction;
 
@@ -32,9 +36,9 @@ public abstract class Projectile : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (LevelManager.Instance.IsOutsideBounds(transform.position))
+        if (Vector3.Distance(startPosition, transform.position) > maxDistance)
         {
-            // If the projectile has left the bounds of the level, destroy it.
+            // If the projectile has traveled more than its max distance, destroy it.
             Destroy(gameObject);
             return;
         }
@@ -51,7 +55,15 @@ public abstract class Projectile : MonoBehaviour
         {
             // If the projectile hits a monster, damage it and destroy the projectile.
             monster.TakeDamage(damage);
-            Destroy(gameObject);
+
+            // First, get a reference to the Canvas
+            Canvas canvas = FindObjectOfType<Canvas>();
+
+            GameObject damageText = Instantiate(damageTextPrefab, transform.position, Quaternion.identity, canvas.transform);
+            damageText.GetComponent<TMPro.TextMeshProUGUI>().text = damage.ToString();
+            Destroy(damageText, 0.2f); // Destroy after half a second
+           
+            Destroy(gameObject); //destroy this projectile
         }
     }
 }

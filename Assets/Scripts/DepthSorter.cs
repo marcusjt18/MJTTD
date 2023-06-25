@@ -24,7 +24,9 @@ public class DepthSorter : MonoBehaviour
         if (spriteRenderer != null)
         {
             float yPos = transform.position.y;
-            spriteRenderer.sortingOrder = -(int)(yPos)*100;
+            float xPos = transform.position.x;
+            spriteRenderer.sortingOrder = -(int)((xPos + yPos) * 100);
+
         }
         else
         {
