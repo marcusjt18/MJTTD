@@ -453,8 +453,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  health: 9
-  maxHealth: 5
+  maxHealth: 15
   healthBar: {fileID: 5508282325211378338}
   prefab: {fileID: 5742545870747995233}
   id: rat
