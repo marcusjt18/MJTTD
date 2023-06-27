@@ -528,7 +528,12 @@ MonoBehaviour:
   - potentialMonsters:
     - monsterId: rat
       weight: 1
-    monsterCount: 10
+    monsterCount: 2
+    spawnInterval: 0.5
+  - potentialMonsters:
+    - monsterId: rat
+      weight: 1
+    monsterCount: 3
     spawnInterval: 0.5
 --- !u!1 &1637135637
 GameObject:

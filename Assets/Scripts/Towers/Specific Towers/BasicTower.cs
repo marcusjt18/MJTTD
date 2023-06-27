@@ -10,7 +10,7 @@ public class BasicTower : Tower
         if (Target != null)
         {
             Projectile projectileInstance = Instantiate(ProjectilePrefab, transform.position, Quaternion.identity, ProjectilesParent).GetComponent<Projectile>();
-            projectileInstance.Initialize(Target, transform.position);
+            projectileInstance.Initialize(Target, transform.position, CalculateDamage());
         }
 
     }

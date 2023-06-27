@@ -378,6 +378,7 @@
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/LevelManager.cs"
 "Assets/Scripts/Monsters/Monster.cs"
+"Assets/Scripts/Monsters/MonsterHealthBar.cs"
 "Assets/Scripts/Monsters/MonsterSpawner.cs"
 "Assets/Scripts/Monsters/Specific Monsters/DemonRat.cs"
 "Assets/Scripts/Pathfinder.cs"

@@ -47,8 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: basic
-  range: 10
-  damage: 0
+  range: 3
+  minDamage: 1
+  maxDamage: 2
   prefab: {fileID: 7407265443852324103}
   projectilePrefab: {fileID: 416730820919663981, guid: 4962ff6205b6abc41a091d27c1ded56d, type: 3}
   ProjectilesParent: {fileID: 0}

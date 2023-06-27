@@ -111,21 +111,7 @@ public class Pathfinder : MonoBehaviour
 
     void Update()
     {
-        //if (Input.GetKey(KeyCode.Space))
-        //{
-        //    TileScript startTile = levelManager.GetTile(0, 0);
-        //    TileScript endTile = levelManager.GetTile(14, 9);
-        //    List<TileScript> path = FindPath(startTile, endTile);
 
-        //    if(path != null)
-        //    {
-        //        foreach (TileScript tile in path)
-        //        {
-        //            Debug.Log($"Tile at position: {tile.transform.position}");
-        //        }
-        //    }
-
-        //}
     }
 }
 

@@ -4,8 +4,7 @@ using UnityEngine;
 
 public abstract class Projectile : MonoBehaviour
 {
-    [SerializeField]
-    protected int damage = 1;
+    protected int damage;
     [SerializeField]
     protected float speed = 5f;
     protected Monster target;
@@ -20,8 +19,9 @@ public abstract class Projectile : MonoBehaviour
 
     public Vector3 Direction { get => direction; set => direction = value; }
 
-    public virtual void Initialize(Monster target, Vector3 startPosition)
+    public virtual void Initialize(Monster target, Vector3 startPosition, int damage)
     {
+        this.damage = damage;
         this.target = target;
         this.startPosition = startPosition;
 

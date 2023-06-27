@@ -7,8 +7,14 @@ public abstract class Monster : MonoBehaviour
     [SerializeField]
     private float speed = 1.0f;
 
+    private int health;
+
     [SerializeField]
-    private int health = 5;
+    private int maxHealth = 5;
+
+
+    [SerializeField]
+    private MonsterHealthBar healthBar;
 
     [SerializeField]
     private GameObject prefab;
@@ -27,11 +33,11 @@ public abstract class Monster : MonoBehaviour
     protected int currentTileIndex;
 
     public float Speed { get => speed; set => speed = value; }
-    public int Health { get => health; set => health = value; }
     public GameObject Prefab { get => prefab; set => prefab = value; }
     public string Id { get => id; set => id = value; }
     public int MinWave { get => minWave; set => minWave = value; }
     public int MaxWave { get => maxWave; set => maxWave = value; }
+    public int MaxHealth { get => maxHealth; set => maxHealth = value; }
 
     public virtual void Initialize(List<TileScript> path)
     {
@@ -39,6 +45,11 @@ public abstract class Monster : MonoBehaviour
         transform.position = LevelManager.Instance.StartTile.transform.position;
         currentTileIndex = 0;
         this.gameObject.AddComponent<DepthSorter>();
+    }
+
+    private void Awake()
+    {
+        health = this.maxHealth;
     }
 
     protected virtual void Update()
@@ -73,7 +84,7 @@ public abstract class Monster : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
-
+        healthBar.UpdateHealthbar((float)health, (float)maxHealth);
     }
 
     private void Die(bool reachedEnd) {

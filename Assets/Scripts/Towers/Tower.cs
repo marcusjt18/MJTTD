@@ -9,7 +9,9 @@ public abstract class Tower : MonoBehaviour
     [SerializeField]
     private float range = 10f;
     [SerializeField]
-    private int damage;
+    private int minDamage;
+    [SerializeField]
+    private int maxDamage;
     [SerializeField]
     private GameObject prefab;
 
@@ -29,15 +31,21 @@ public abstract class Tower : MonoBehaviour
 
     public string Id { get => id; set => id = value; }
     public float Range { get => range; set => range = value; }
-    public int Damage { get => damage; set => damage = value; }
+
     public GameObject Prefab { get => prefab; set => prefab = value; }
     public GameObject ProjectilePrefab { get => projectilePrefab; set => projectilePrefab = value; }
+    public int MaxDamage { get => maxDamage; set => maxDamage = value; }
+    public int MinDamage { get => minDamage; set => minDamage = value; }
 
     private List<Monster> monstersInRange = new List<Monster>();
 
     void Start()
     {
         ProjectilesParent = GameObject.Find("ProjectilesParent").transform;
+
+        CircleCollider2D circleCollider = GetComponent<CircleCollider2D>();
+        circleCollider.radius = range;
+
     }
 
 
@@ -104,5 +112,11 @@ public abstract class Tower : MonoBehaviour
             Debug.Log(monster + "REMOVED");
         }
     }
+
+    public int CalculateDamage()
+    {
+        return UnityEngine.Random.Range(minDamage, maxDamage + 1);
+    }
+
 }
 
