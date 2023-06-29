@@ -381,6 +381,7 @@ GameObject:
   - component: {fileID: 1056168332}
   - component: {fileID: 1056168331}
   - component: {fileID: 1056168330}
+  - component: {fileID: 1056168333}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -431,7 +432,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 9
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -455,13 +456,32 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1056168329}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12, y: 7, z: -10}
+  m_LocalPosition: {x: 8.4, y: 5.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1056168333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056168329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3be168f201ad62a4a9ffd586a1f32ff0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panSpeed: 20
+  panBorderThickness: 10
+  panMinLimit: {x: 4, y: 2}
+  panMaxLimit: {x: 13, y: 9.2}
+  scrollSpeed: 20
+  minZoom: 3
+  maxZoom: 7
 --- !u!1 &1095482718
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,8 +695,8 @@ MonoBehaviour:
   endPortalPrefab: {fileID: 8600761570473318527, guid: 7be87d0fa38bbf34db19ea4d1e1c5ab5, type: 3}
   rockPrefab: {fileID: 2901627803744965749, guid: b4564b7809feb894e85a0bfa0b051d3c, type: 3}
   RockParent: {fileID: 0}
-  width: 25
-  height: 15
+  width: 18
+  height: 12
   pathFinder: {fileID: 1667127533}
 --- !u!4 &2015101459
 Transform:
