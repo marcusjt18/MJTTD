@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3001175840777272717}
   - component: {fileID: 552488474502598725}
   - component: {fileID: 7602590004527232199}
+  - component: {fileID: -549207589076644940}
   m_Layer: 0
   m_Name: basic_arrow
   m_TagString: Untagged
@@ -98,10 +99,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc6c85ff7fd29c4dabbe66203b9d8d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
   speed: 7
   maxDistance: 10
   damageTextPrefab: {fileID: 5272348654087479157, guid: cbb04a5321f0d43459056813012466f6, type: 3}
+  hitEffect: {fileID: 4391273294253425016, guid: eddeacda21c77bd4ab23557354802f49, type: 3}
+  hitEffectDuration: 0.5
 --- !u!58 &7602590004527232199
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -137,3 +139,30 @@ CircleCollider2D:
   m_Offset: {x: 0.1, y: -0.02}
   serializedVersion: 2
   m_Radius: 0.11
+--- !u!50 &-549207589076644940
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416730820919663981}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

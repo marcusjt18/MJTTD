@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class MonsterSpawner : MonoBehaviour
 {
-    [SerializeField]
-    private List<Monster> monsterPrefabs;
 
-    // A dictionary to store the monster prefabs with their identifier strings.
-    private Dictionary<string, Monster> monsterDict = new Dictionary<string, Monster>();
+    [SerializeField]
+    private MonsterTiers tiers;
 
     private List<TileScript> path;
 
@@ -16,80 +14,72 @@ public class MonsterSpawner : MonoBehaviour
 
     private void Awake()
     {
-        // Fill the dictionary with monsters from the monsterPrefabs list.
-        foreach (Monster monster in monsterPrefabs)
-        {
-            monsterDict.Add(monster.Id, monster);
-        }
+
     }
 
-    public void SpawnMonster(string id, List<TileScript> path)
+    public void SpawnMonster(GameObject monster, List<TileScript> path)
     {
-        // Check if a monster with the given id exists.
-        if (monsterDict.ContainsKey(id))
-        {
-            // Get the monster prefab from the dictionary.
-            Monster monsterPrefab = monsterDict[id];
 
-            // Instantiate the monster.
-            Monster newMonster = Instantiate(monsterPrefab.Prefab, LevelManager.Instance.StartTile.transform.position, Quaternion.identity, transform).GetComponent<Monster>();
-            newMonster.Initialize(path);
-            GameManager.Instance.MonsterCounter++;
-        }
-        else
-        {
-            Debug.LogError("No monster with id " + id + " found!");
-        }
+        // Instantiate the monster.
+        Monster newMonster = Instantiate(monster, LevelManager.Instance.StartTile.transform.position, Quaternion.identity, transform).GetComponent<Monster>();
+        newMonster.Initialize(path);
+        GameManager.Instance.MonsterCounter++;
     }
 
-    public IEnumerator SpawnWave(Wave wave)
+    public IEnumerator SpawnWave(int level)
     {
-        for (int i = 0; i < wave.monsterCount; i++)
+        Wave wave = GenerateWave(level);
+
+        for (int i = 0; i < wave.monstersToSpawn.Count; i++)
         {
-            // Compute the total weight.
-            int totalWeight = 0;
-            foreach (Wave.WaveEntry entry in wave.potentialMonsters)
-            {
-                totalWeight += entry.weight;
-            }
 
-            // Choose a random value between 0 and the total weight.
-            int choice = Random.Range(0, totalWeight);
-
-            // Find which monster this corresponds to.
-            string chosenMonsterId = null;
-            foreach (Wave.WaveEntry entry in wave.potentialMonsters)
-            {
-                if (choice < entry.weight)
-                {
-                    chosenMonsterId = entry.monsterId;
-                    break;
-                }
-                choice -= entry.weight;
-            }
-
-            // Spawn the chosen monster.
-            SpawnMonster(chosenMonsterId, path);
+            SpawnMonster(wave.monstersToSpawn[i], path);
 
             yield return new WaitForSeconds(wave.spawnInterval);
         }
     }
-}
 
+    public Wave GenerateWave(int level)
+    {
+        Wave wave = new Wave();
+
+        int monsterCount = 4 + Mathf.RoundToInt(level * 2.4f);
+        wave.monsterCount = monsterCount;
+        switch (level)
+        {
+            case < 5:
+                wave.spawnInterval = 0.7f;
+                break;
+            case < 10:
+                wave.spawnInterval = 0.5f;
+                break;
+            case < 15:
+                wave.spawnInterval = 0.3f;
+                break;
+            default:
+                wave.spawnInterval = 0.2f;
+                break;
+        }
+
+        for (int i = 0; i < monsterCount; i++)
+        {
+            GameObject monster = tiers.Tiers[0][Random.Range(0, tiers.Tiers[0].Count)];
+            wave.monstersToSpawn.Add(monster);
+        }
+
+
+        return wave;
+    }
+}
 
 [System.Serializable]
 public class Wave
 {
-    [System.Serializable]
-    public struct WaveEntry
-    {
-        public string monsterId;
-        public int weight;
-    }
-
-    public List<WaveEntry> potentialMonsters;
+    public List<GameObject> monstersToSpawn = new List<GameObject>();
     public int monsterCount;
     public float spawnInterval;
 }
+
+
 
 

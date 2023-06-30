@@ -12,7 +12,6 @@ public class MonsterHealthBar : MonoBehaviour
     public void UpdateHealthbar(float currentValue, float maxValue)
     {
         slider.value = currentValue / maxValue;
-        Debug.Log(slider.value + " VALUE");
     }
 
     // Start is called before the first frame update

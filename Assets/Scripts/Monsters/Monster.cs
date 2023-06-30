@@ -28,6 +28,9 @@ public abstract class Monster : MonoBehaviour
     [SerializeField]
     private int maxWave = int.MaxValue;
 
+    public GameObject deathEffect;
+    public float deathEffectDuration = 0.5f;
+
 
     protected List<TileScript> path;
     protected int currentTileIndex;
@@ -54,7 +57,7 @@ public abstract class Monster : MonoBehaviour
 
     protected virtual void Update()
     {
-        GetComponent<DepthSorter>().UpdateOrder();
+        GetComponent<DepthSorter>().UpdateOrderForMonster();
         if (health <= 0)
         {
             Die(false);
@@ -94,11 +97,12 @@ public abstract class Monster : MonoBehaviour
         {
             // lose life
         }
-        // Check if all monsters are dead
-        if (GameManager.Instance.MonsterCounter == 0)
+        else
         {
-            GameManager.Instance.WaveOngoing = false;
+            GameObject effect = Instantiate(deathEffect, transform.position, Quaternion.identity);
+            Destroy(effect, deathEffectDuration);
         }
+
     }
 
 

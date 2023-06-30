@@ -432,7 +432,7 @@ Transform:
   m_GameObject: {fileID: 5742545870747995233}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6167760512940135525}
@@ -453,12 +453,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  maxHealth: 15
+  maxHealth: 10
   healthBar: {fileID: 5508282325211378338}
   prefab: {fileID: 5742545870747995233}
   id: rat
   minWave: 1
   maxWave: 2147483647
+  deathEffect: {fileID: 6020961193504596859, guid: b2077727f3c3d7d4082c99359a030e46, type: 3}
+  deathEffectDuration: 2
 --- !u!50 &-248729083117461937
 Rigidbody2D:
   serializedVersion: 4

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7848925329980144230}
   - component: {fileID: 2485467327968916456}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: wolf_tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 275334239144017866}
   - component: {fileID: 6371927449753071763}
   - component: {fileID: -6781456173503016929}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: WolfTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: wolf
   range: 10
-  damage: 0
+  minDamage: 0
+  maxDamage: 0
   prefab: {fileID: 4589795718836687180}
   projectilePrefab: {fileID: 0}
   ProjectilesParent: {fileID: 0}

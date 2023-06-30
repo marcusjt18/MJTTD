@@ -83,7 +83,6 @@ public abstract class Tower : MonoBehaviour
         {
             // The first monster in the list is the new target.
             Target = monstersInRange[0];
-            Debug.Log(Target.Id);
         }
         else
         {
@@ -98,7 +97,6 @@ public abstract class Tower : MonoBehaviour
         if (monster != null)
         {
             monstersInRange.Add(monster);
-            Debug.Log(monstersInRange);
         }
 
     }
@@ -109,7 +107,6 @@ public abstract class Tower : MonoBehaviour
         if (monster != null)
         {
             monstersInRange.Remove(monster);
-            Debug.Log(monster + "REMOVED");
         }
     }
 

@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour
 
     private List<TileScript> path;
 
-    public List<Wave> waves;
     private int currentWaveIndex = 0;
     public TowerPlacer TowerPlacer { get => towerPlacer; }
     public MonsterSpawner MonsterSpawner { get => monsterSpawner; set => monsterSpawner = value; }
@@ -67,17 +66,16 @@ public class GameManager : MonoBehaviour
             {
                 monsterSpawner.Path = levelManager.PathFinder.FindPath(levelManager.StartTile, levelManager.EndTile);
                 // Check if there are more waves to spawn
-                if (currentWaveIndex < waves.Count)
-                {
-                    waveOngoing = true;
-                    StartCoroutine(monsterSpawner.SpawnWave(waves[currentWaveIndex]));
-                    currentWaveIndex++;
-                }
-                else
-                {
-                    Debug.Log("All waves spawned!");
-                }
+                waveOngoing = true;
+                StartCoroutine(monsterSpawner.SpawnWave(currentWaveIndex));
+                currentWaveIndex++;
+
             }
+        }
+
+        if (monsterCounter <= 0)
+        {
+            waveOngoing = false;
         }
 
     }

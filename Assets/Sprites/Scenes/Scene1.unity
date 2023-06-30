@@ -152,8 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc5652a38bbdd0f43b7278dfc6a42802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterPrefabs:
-  - {fileID: 6664402099005025844, guid: 850521e5ff0b0fb4f91695f5d3891b7d, type: 3}
+  tiers: {fileID: 1660754804}
 --- !u!4 &41643892
 Transform:
   m_ObjectHideFlags: 0
@@ -235,7 +234,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &590227664
 GameObject:
@@ -332,7 +331,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -368,7 +367,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1056168329
 GameObject:
@@ -575,17 +574,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerPlacer: {fileID: 1095482719}
   monsterSpawner: {fileID: 41643891}
-  waves:
-  - potentialMonsters:
-    - monsterId: rat
-      weight: 1
-    monsterCount: 2
-    spawnInterval: 0.5
-  - potentialMonsters:
-    - monsterId: rat
-      weight: 1
-    monsterCount: 3
-    spawnInterval: 0.5
 --- !u!1 &1637135637
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,8 +603,63 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1660754801
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1660754803}
+  - component: {fileID: 1660754804}
+  m_Layer: 0
+  m_Name: MonsterTiers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1660754803
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660754801}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.3967534, y: 0.78949475, z: -0.109946065}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1660754804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660754801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03a42dd2dfd2b904384e54b67f449956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tier1:
+  - {fileID: 5742545870747995233, guid: 850521e5ff0b0fb4f91695f5d3891b7d, type: 3}
+  - {fileID: 2570266000388277500, guid: 078bfa66df21ba842925241c61da8a4f, type: 3}
+  tier2: []
+  tier3: []
+  tier4: []
+  tier5: []
+  tier6: []
+  tier7: []
+  tier8: []
+  tier9: []
 --- !u!1 &1667127531
 GameObject:
   m_ObjectHideFlags: 0
