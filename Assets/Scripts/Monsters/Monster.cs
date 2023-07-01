@@ -28,7 +28,8 @@ public abstract class Monster : MonoBehaviour
     [SerializeField]
     private int maxWave = int.MaxValue;
 
-    public GameObject deathEffect;
+    public ParticleSystemPool particleSystemPool;
+
     public float deathEffectDuration = 0.5f;
 
 
@@ -53,6 +54,7 @@ public abstract class Monster : MonoBehaviour
     private void Awake()
     {
         health = this.maxHealth;
+        particleSystemPool = ParticleSystemPool.Instance;
     }
 
     protected virtual void Update()
@@ -90,7 +92,8 @@ public abstract class Monster : MonoBehaviour
         healthBar.UpdateHealthbar((float)health, (float)maxHealth);
     }
 
-    private void Die(bool reachedEnd) {
+    private void Die(bool reachedEnd)
+    {
         Destroy(this.gameObject);
         GameManager.Instance.MonsterCounter--;
         if (reachedEnd)
@@ -99,11 +102,10 @@ public abstract class Monster : MonoBehaviour
         }
         else
         {
-            GameObject effect = Instantiate(deathEffect, transform.position, Quaternion.identity);
-            Destroy(effect, deathEffectDuration);
+            GameObject effect = particleSystemPool.SpawnFromPoolWithReturn("deathEffect", transform.position, Quaternion.identity, deathEffectDuration);
         }
-
     }
+
 
 
 

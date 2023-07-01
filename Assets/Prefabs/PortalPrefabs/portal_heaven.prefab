@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3244212865298843738}
   - component: {fileID: 1252850360007665777}
+  - component: {fileID: 6748776290475732472}
   m_Layer: 0
   m_Name: portal_heaven
   m_TagString: Untagged
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1ab5d86f0170e4940bf3462f22d40825, type: 3}
+  m_Sprite: {fileID: 21300000, guid: df41b53df5be59148968148b7f92fe89, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -84,3 +85,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6748776290475732472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8600761570473318527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 634c644f8c32fa24cb9d566c127b3b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amplitude: 0.12
+  frequency: 0.2

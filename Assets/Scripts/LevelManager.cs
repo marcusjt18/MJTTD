@@ -164,11 +164,13 @@ public class LevelManager : MonoBehaviour
                 {
                     GameObject sp = Instantiate(startPortalPrefab, tiles[i, j].transform.position + new Vector3(0, 0, -1), Quaternion.identity);
                     sp.AddComponent<DepthSorter>();
+
                 }
                 else if (tiles[i, j] == EndTile)
                 {
                     GameObject ep = Instantiate(endPortalPrefab, tiles[i, j].transform.position + new Vector3(0, 0, -1), Quaternion.identity);
                     ep.AddComponent<DepthSorter>();
+
                 }
             }
         }

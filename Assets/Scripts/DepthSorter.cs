@@ -34,6 +34,7 @@ public class DepthSorter : MonoBehaviour
         }
     }
 
+
     public void UpdateOrderForMonster()
     {
         // First, try to get the SpriteRenderer from the current GameObject

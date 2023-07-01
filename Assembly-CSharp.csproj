@@ -100,6 +100,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
+    <Compile Include="Assets\Scripts\Portals\FloatEffect.cs" />
     <Compile Include="Assets\Scripts\Towers\Tower.cs" />
     <Compile Include="Assets\Scripts\DepthSorter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
@@ -107,7 +108,7 @@
     <Compile Include="Assets\Scripts\Projectiles\BasicArrow.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\TileScript.cs" />
-    <Compile Include="Assets\Scripts\FireTowerScript.cs" />
+    <Compile Include="Assets\Scripts\Effects\ParticleSystemPool.cs" />
     <Compile Include="Assets\Scripts\Monsters\MonsterSpawner.cs" />
     <Compile Include="Assets\Scripts\Towers\Specific Towers\BasicTower.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />

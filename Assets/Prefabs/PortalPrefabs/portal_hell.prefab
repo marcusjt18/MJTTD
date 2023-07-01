@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 786517382498730297}
   - component: {fileID: 7544974920149295665}
+  - component: {fileID: 6177481818173901030}
   m_Layer: 0
   m_Name: portal_hell
   m_TagString: Untagged
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 50e8cbc8dcbeb004e8c24883e2c1eaad, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f21a77b8af2ed4f4ab507c55410d4be8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -84,3 +85,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6177481818173901030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6721211242881586212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 634c644f8c32fa24cb9d566c127b3b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amplitude: 0.1
+  frequency: 0.23

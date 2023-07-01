@@ -14,13 +14,18 @@ public abstract class Projectile : MonoBehaviour
     [SerializeField]
     private GameObject damageTextPrefab;
 
-    public GameObject hitEffect;
+    private ParticleSystemPool particleSystemPool;
     public float hitEffectDuration = 0.3f;
 
     private Vector3 startPosition;
     private Vector3 direction;
 
     public Vector3 Direction { get => direction; set => direction = value; }
+
+    private void Awake()
+    {
+        particleSystemPool = ParticleSystemPool.Instance;
+    }
 
     public virtual void Initialize(Monster target, Vector3 startPosition, int damage)
     {
@@ -58,16 +63,15 @@ public abstract class Projectile : MonoBehaviour
         {
             // If the projectile hits a monster, damage it and destroy the projectile.
             monster.TakeDamage(damage);
-            GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
-            Destroy(effect, hitEffectDuration);
+            GameObject effect = particleSystemPool.SpawnFromPoolWithReturn("hitEffect", transform.position, Quaternion.identity, hitEffectDuration);
 
 
-            
+
             //Canvas canvas = FindObjectOfType<Canvas>();
             //GameObject damageText = Instantiate(damageTextPrefab, transform.position, Quaternion.identity, canvas.transform);
             //damageText.GetComponent<TMPro.TextMeshProUGUI>().text = damage.ToString();
             //Destroy(damageText, 0.2f);
-           
+
             Destroy(gameObject); //destroy this projectile
         }
     }
