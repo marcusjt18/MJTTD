@@ -68,7 +68,6 @@ public abstract class Projectile : MonoBehaviour
         Monster monster = other.GetComponent<Monster>();
         if (monster != null)
         {
-            // If the projectile hits a monster, damage it and destroy the projectile.
             monster.TakeDamage(damage);
             GameObject effect = particleSystemPool.SpawnFromPoolWithReturn("hitEffect", transform.position, Quaternion.identity, hitEffectDuration);
 

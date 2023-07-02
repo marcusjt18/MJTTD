@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public abstract class Monster : MonoBehaviour
 {
     [SerializeField]
     private float speed = 1.0f;
+
+    private float currentSpeed;
 
     private int health;
 
@@ -17,31 +20,19 @@ public abstract class Monster : MonoBehaviour
     private MonsterHealthBar healthBar;
 
     [SerializeField]
-    private GameObject prefab;
-
-    [SerializeField]
     private string id;
 
-    [SerializeField]
-    private int minWave = 1;
+    private ParticleSystemPool particleSystemPool;
 
-    [SerializeField]
-    private int maxWave = int.MaxValue;
-
-    public ParticleSystemPool particleSystemPool;
-
-    public float deathEffectDuration = 0.5f;
+    private float deathEffectDuration = 2f;
 
 
     protected List<TileScript> path;
     protected int currentTileIndex;
 
-    public float Speed { get => speed; set => speed = value; }
-    public GameObject Prefab { get => prefab; set => prefab = value; }
     public string Id { get => id; set => id = value; }
-    public int MinWave { get => minWave; set => minWave = value; }
-    public int MaxWave { get => maxWave; set => maxWave = value; }
     public int MaxHealth { get => maxHealth; set => maxHealth = value; }
+    public float CurrentSpeed { get => currentSpeed; set => currentSpeed = value; }
 
     public virtual void Initialize(List<TileScript> path)
     {
@@ -54,6 +45,7 @@ public abstract class Monster : MonoBehaviour
     private void Awake()
     {
         health = this.maxHealth;
+        CurrentSpeed = speed;
         particleSystemPool = ParticleSystemPool.Instance;
     }
 
@@ -67,7 +59,7 @@ public abstract class Monster : MonoBehaviour
 
         if (currentTileIndex < path.Count)
         {
-            transform.position = Vector3.MoveTowards(transform.position, path[currentTileIndex].transform.position, Speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, path[currentTileIndex].transform.position, CurrentSpeed * Time.deltaTime);
 
             if (transform.position == path[currentTileIndex].transform.position)
             {
@@ -94,7 +86,7 @@ public abstract class Monster : MonoBehaviour
 
     private void Die(bool reachedEnd)
     {
-        Destroy(this.gameObject);
+        MonsterPool.Instance.ReturnToPool(this.Id, this.gameObject);
         GameManager.Instance.MonsterCounter--;
         if (reachedEnd)
         {
@@ -106,9 +98,52 @@ public abstract class Monster : MonoBehaviour
         }
     }
 
+    public void ResetMonster()
+    {
+        health = this.maxHealth;
+        CurrentSpeed = speed;
+        healthBar.UpdateHealthbar((float)health, (float)maxHealth);
 
+    }
 
+    #region SlowEffect
 
-    // Other common functionality, such as taking damage, dying, etc. can be defined here as well.
+    private Dictionary<int, SlowEffect> activeSlows = new Dictionary<int, SlowEffect>();
+    public class SlowEffect
+    {
+        public float Slow { get; set; }
+        public Coroutine Coroutine { get; set; }
+    }
+
+    public void ApplySlow(float slow, float duration)
+    {
+        var slowEffect = new SlowEffect() { Slow = slow };
+        slowEffect.Coroutine = StartCoroutine(ApplySlowCoroutine(slowEffect, duration));
+        activeSlows.Add(slowEffect.Coroutine.GetHashCode(), slowEffect);
+        CurrentSpeed = CalculateCurrentSpeed();
+    }
+
+    private float CalculateCurrentSpeed()
+    {
+        if (activeSlows.Any())
+        {
+            float strongestSlow = activeSlows.Values.Max(effect => effect.Slow);
+            return Mathf.Max(speed - strongestSlow, 0.2f);
+        }
+        else
+        {
+            return speed;
+        }
+    }
+
+    private IEnumerator ApplySlowCoroutine(SlowEffect slowEffect, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        activeSlows.Remove(slowEffect.Coroutine.GetHashCode());
+        CurrentSpeed = CalculateCurrentSpeed();
+    }
+
+    #endregion
+
 }
 

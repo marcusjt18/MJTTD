@@ -380,6 +380,7 @@
 "Assets/Scripts/LevelManager.cs"
 "Assets/Scripts/Monsters/Monster.cs"
 "Assets/Scripts/Monsters/MonsterHealthBar.cs"
+"Assets/Scripts/Monsters/MonsterPool.cs"
 "Assets/Scripts/Monsters/MonsterSpawner.cs"
 "Assets/Scripts/Monsters/MonsterTiers.cs"
 "Assets/Scripts/Monsters/Specific Monsters/DemonRat.cs"

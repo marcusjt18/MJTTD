@@ -4,34 +4,21 @@ using UnityEngine;
 
 public class MonsterTiers : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> tier1;
-    [SerializeField] private List<GameObject> tier2;
-    [SerializeField] private List<GameObject> tier3;
-    [SerializeField] private List<GameObject> tier4;
-    [SerializeField] private List<GameObject> tier5;
-    [SerializeField] private List<GameObject> tier6;
-    [SerializeField] private List<GameObject> tier7;
-    [SerializeField] private List<GameObject> tier8;
-    [SerializeField] private List<GameObject> tier9;
-
-    public List<List<GameObject>> Tiers { get; private set; }
-
-    private void Awake()
+    [System.Serializable]
+    public class MonsterTier
     {
-        Tiers = new List<List<GameObject>>
-        {
-            tier1,
-            tier2,
-            tier3,
-            tier4,
-            tier5,
-            tier6,
-            tier7,
-            tier8,
-            tier9
-        };
+        public List<string> monsters;
+        public int minLevel;
+        public int maxLevel;
     }
+
+    [SerializeField]
+    private List<MonsterTier> tiers;
+    public List<MonsterTier> Tiers { get => tiers; set => tiers = value; }
+
 }
+
+
 
 
 

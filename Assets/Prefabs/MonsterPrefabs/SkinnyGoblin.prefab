@@ -85,15 +85,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9d9f0a6a5781d841ae37479c631fd21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1.4
-  maxHealth: 6
+  speed: 0.8
+  maxHealth: 12
   healthBar: {fileID: 7273731086527523161}
-  prefab: {fileID: 2570266000388277500}
-  id: skinnygoblin
+  id: goblin
   minWave: 1
   maxWave: 2147483647
-  deathEffect: {fileID: 6020961193504596859, guid: b2077727f3c3d7d4082c99359a030e46, type: 3}
-  deathEffectDuration: 0.5
 --- !u!50 &2911823795567833563
 Rigidbody2D:
   serializedVersion: 4

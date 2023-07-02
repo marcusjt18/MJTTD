@@ -53,7 +53,7 @@ public class DepthSorter : MonoBehaviour
             float xPos = transform.position.x;
 
             // Add a small offset based on x position
-            spriteRenderer.sortingOrder = -(int)((yPos * 100) - (GetComponent<Monster>().Speed*10) - 50);
+            spriteRenderer.sortingOrder = -(int)((yPos * 100) - (GetComponent<Monster>().CurrentSpeed*10));
         }
         else
         {
