@@ -4,6 +4,10 @@ using UnityEngine;
 
 public abstract class Projectile : MonoBehaviour
 {
+    [SerializeField]
+    private string projectileTag;
+
+
     protected int damage;
     [SerializeField]
     protected float speed = 5f;
@@ -15,16 +19,19 @@ public abstract class Projectile : MonoBehaviour
     private GameObject damageTextPrefab;
 
     private ParticleSystemPool particleSystemPool;
+    private ProjectilePool projectilePool;
     public float hitEffectDuration = 0.3f;
 
     private Vector3 startPosition;
     private Vector3 direction;
 
     public Vector3 Direction { get => direction; set => direction = value; }
+    public string ProjectileTag { get => projectileTag; set => projectileTag = value; }
 
     private void Awake()
     {
         particleSystemPool = ParticleSystemPool.Instance;
+        projectilePool = ProjectilePool.Instance;
     }
 
     public virtual void Initialize(Monster target, Vector3 startPosition, int damage)
@@ -47,7 +54,7 @@ public abstract class Projectile : MonoBehaviour
         if (Vector3.Distance(startPosition, transform.position) > maxDistance)
         {
             // If the projectile has traveled more than its max distance, destroy it.
-            Destroy(gameObject);
+            projectilePool.ReturnToPool(ProjectileTag, gameObject);
             return;
         }
 
@@ -72,7 +79,7 @@ public abstract class Projectile : MonoBehaviour
             //damageText.GetComponent<TMPro.TextMeshProUGUI>().text = damage.ToString();
             //Destroy(damageText, 0.2f);
 
-            Destroy(gameObject); //destroy this projectile
+            ProjectilePool.Instance.ReturnToPool(projectileTag, gameObject);
         }
     }
 }

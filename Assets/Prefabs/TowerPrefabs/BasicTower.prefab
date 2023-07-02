@@ -51,8 +51,7 @@ MonoBehaviour:
   minDamage: 1
   maxDamage: 2
   prefab: {fileID: 7407265443852324103}
-  projectilePrefab: {fileID: 416730820919663981, guid: 4962ff6205b6abc41a091d27c1ded56d, type: 3}
-  ProjectilesParent: {fileID: 0}
+  projectileTag: basicArrow
   attackSpeed: 1
 --- !u!58 &-4921983104499724763
 CircleCollider2D:

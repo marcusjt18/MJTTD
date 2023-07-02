@@ -9,10 +9,16 @@ public class BasicTower : Tower
     {
         if (Target != null)
         {
-            Projectile projectileInstance = Instantiate(ProjectilePrefab, transform.position, Quaternion.identity, ProjectilesParent).GetComponent<Projectile>();
-            projectileInstance.Initialize(Target, transform.position, CalculateDamage());
-        }
+            // Replace the Instantiate call with the SpawnFromPool method
+            GameObject projectileObject = ProjectilePool.Instance.SpawnFromPool(ProjectileTag, transform.position, Quaternion.identity);
 
+            if (projectileObject != null) // This checks if the pool returned an object (i.e., the pool wasn't empty)
+            {
+                Projectile projectileInstance = projectileObject.GetComponent<Projectile>();
+                projectileInstance.Initialize(Target, transform.position, CalculateDamage());
+            }
+        }
     }
 }
+
 

@@ -99,10 +99,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc6c85ff7fd29c4dabbe66203b9d8d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectileTag: basicArrow
   speed: 7
   maxDistance: 10
   damageTextPrefab: {fileID: 5272348654087479157, guid: cbb04a5321f0d43459056813012466f6, type: 3}
-  hitEffect: {fileID: 4391273294253425016, guid: eddeacda21c77bd4ab23557354802f49, type: 3}
   hitEffectDuration: 0.5
 --- !u!58 &7602590004527232199
 CircleCollider2D:

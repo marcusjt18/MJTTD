@@ -16,10 +16,7 @@ public abstract class Tower : MonoBehaviour
     private GameObject prefab;
 
     [SerializeField]
-    private GameObject projectilePrefab;
-
-    public Transform ProjectilesParent;
-
+    private string projectileTag;
 
     [SerializeField]
     private float attackSpeed = 1.0f;
@@ -33,15 +30,14 @@ public abstract class Tower : MonoBehaviour
     public float Range { get => range; set => range = value; }
 
     public GameObject Prefab { get => prefab; set => prefab = value; }
-    public GameObject ProjectilePrefab { get => projectilePrefab; set => projectilePrefab = value; }
     public int MaxDamage { get => maxDamage; set => maxDamage = value; }
     public int MinDamage { get => minDamage; set => minDamage = value; }
+    public string ProjectileTag { get => projectileTag; set => projectileTag = value; }
 
     private List<Monster> monstersInRange = new List<Monster>();
 
     void Start()
     {
-        ProjectilesParent = GameObject.Find("ProjectilesParent").transform;
 
         CircleCollider2D circleCollider = GetComponent<CircleCollider2D>();
         circleCollider.radius = range;

@@ -77,8 +77,6 @@ public class ParticleSystemPool : MonoBehaviour
         objectToSpawn.transform.position = position;
         objectToSpawn.transform.rotation = rotation;
 
-        Debug.Log(poolDictionary[tag].Count + " POOL LENGTH");
-
         return objectToSpawn;
     }
 

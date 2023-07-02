@@ -389,6 +389,7 @@
 "Assets/Scripts/Portals/FloatEffect.cs"
 "Assets/Scripts/Projectiles/BasicArrow.cs"
 "Assets/Scripts/Projectiles/Projectile.cs"
+"Assets/Scripts/Projectiles/ProjectilePool.cs"
 "Assets/Scripts/TileScript.cs"
 "Assets/Scripts/Towers/Specific Towers/BasicTower.cs"
 "Assets/Scripts/Towers/Specific Towers/WolfTower.cs"
