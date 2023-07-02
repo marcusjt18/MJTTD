@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     public bool WaveOngoing { get => waveOngoing; set => waveOngoing = value; }
     public int MonsterCounter { get => monsterCounter; set => monsterCounter = value; }
     public List<TileScript> Path { get => path; set => path = value; }
+    public int CurrentWaveIndex { get => currentWaveIndex; set => currentWaveIndex = value; }
 
     private bool waveOngoing = false;
 
@@ -67,8 +68,9 @@ public class GameManager : MonoBehaviour
                 monsterSpawner.Path = levelManager.PathFinder.FindPath(levelManager.StartTile, levelManager.EndTile);
                 // Check if there are more waves to spawn
                 waveOngoing = true;
-                StartCoroutine(monsterSpawner.SpawnWave(currentWaveIndex));
-                currentWaveIndex++;
+                StartCoroutine(monsterSpawner.SpawnWave(CurrentWaveIndex));
+                CurrentWaveIndex++;
+                monsterSpawner.SetNextWave();
 
             }
         }

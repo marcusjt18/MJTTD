@@ -87,10 +87,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.8
   maxHealth: 12
+  goldYield: 3
   healthBar: {fileID: 7273731086527523161}
   id: goblin
-  minWave: 1
-  maxWave: 2147483647
 --- !u!50 &2911823795567833563
 Rigidbody2D:
   serializedVersion: 4

@@ -15,6 +15,9 @@ public abstract class Monster : MonoBehaviour
     [SerializeField]
     private int maxHealth = 5;
 
+    [SerializeField]
+    private int goldYield = 5;
+
 
     [SerializeField]
     private MonsterHealthBar healthBar;
@@ -33,6 +36,7 @@ public abstract class Monster : MonoBehaviour
     public string Id { get => id; set => id = value; }
     public int MaxHealth { get => maxHealth; set => maxHealth = value; }
     public float CurrentSpeed { get => currentSpeed; set => currentSpeed = value; }
+    public int GoldYield { get => goldYield; set => goldYield = value; }
 
     public virtual void Initialize(List<TileScript> path)
     {

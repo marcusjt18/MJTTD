@@ -8,17 +8,31 @@ public class MonsterSpawner : MonoBehaviour
 {
 
     [SerializeField]
-    private MonsterTiers tiers;
+    private List<MonsterTier> tiers;
 
     private List<TileScript> path;
 
+    private GameManager gameManager;
+
     private MonsterPool monsterPool;
 
+    private List<int> lotteryBowl;
+
+    private Wave nextWave;
+
     public List<TileScript> Path { get => path; set => path = value; }
+    public Wave NextWave { get => nextWave; set => nextWave = value; }
 
     private void Awake()
     {
         monsterPool = MonsterPool.Instance;
+        gameManager = GameManager.Instance;
+        lotteryBowl = new List<int>();
+    }
+
+    private void Start()
+    {
+        SetNextWave();
     }
 
     public void SpawnMonster(string tag, List<TileScript> path)
@@ -32,15 +46,20 @@ public class MonsterSpawner : MonoBehaviour
 
     public IEnumerator SpawnWave(int level)
     {
-        Wave wave = GenerateWave(level);
 
-        for (int i = 0; i < wave.monstersToSpawn.Count; i++)
+        for (int i = 0; i < nextWave.monstersToSpawn.Count; i++)
         {
 
-            SpawnMonster(wave.monstersToSpawn[i], path);
+            SpawnMonster(nextWave.monstersToSpawn[i], path);
 
-            yield return new WaitForSeconds(wave.spawnInterval);
+            yield return new WaitForSeconds(nextWave.spawnInterval);
         }
+    }
+
+    public void SetNextWave()
+    {
+        PopulateBowl();
+        nextWave = GenerateWave(gameManager.CurrentWaveIndex);
     }
 
     public Wave GenerateWave(int level)
@@ -65,44 +84,49 @@ public class MonsterSpawner : MonoBehaviour
                 break;
         }
 
-        List<MonsterTiers.MonsterTier> eligibleTiers = tiers.Tiers.Where(tier => level >= tier.minLevel && level <= tier.maxLevel).ToList();
-
-        if (eligibleTiers.Count == 0)
+        if (lotteryBowl.Count == 0)
         {
             Debug.LogError("No eligible tiers found for level " + level);
             return wave;
         }
 
-        // Calculate the total weight
-        int totalWeight = eligibleTiers.Sum(tier => level - tier.minLevel + 1); // Add 1 to ensure there's at least a minimum weight
-
         for (int i = 0; i < monsterCount; i++)
         {
-            // Pick a random number within the total weight
-            int randomNumber = Random.Range(0, totalWeight);
-
-            MonsterTiers.MonsterTier chosenTier = null;
-
-            // Find which tier the random number falls into
-            foreach (var tier in eligibleTiers)
-            {
-                int weight = level - tier.minLevel + 1;
-                if (randomNumber < weight)
-                {
-                    chosenTier = tier;
-                    break;
-                }
-
-                randomNumber -= weight;
-            }
-
-            string monster = chosenTier.monsters[Random.Range(0, chosenTier.monsters.Count)];
+            // Pick a random index from the lottery bowl
+            int tierIndex = lotteryBowl[Random.Range(0, lotteryBowl.Count)];
+            string monster = tiers[tierIndex].monsters[Random.Range(0, tiers[tierIndex].monsters.Count)];
             wave.monstersToSpawn.Add(monster);
         }
 
         return wave;
     }
 
+    public void PopulateBowl()
+    {
+        // HUSK SJEKK OM 50 ER ET PASSE TALL FOR DETTE
+        if (gameManager.CurrentWaveIndex >= tiers[tiers.Count - 1].startLevel && lotteryBowl.Count > 50)
+        {
+            return;
+        }
+
+        for (int i = 0; i < tiers.Count; i++)
+        {
+            if (tiers[i].startLevel <= gameManager.CurrentWaveIndex && gameManager.CurrentWaveIndex < tiers[i].stopAddingLevel && tiers[i].endLevel > gameManager.CurrentWaveIndex)
+            {
+                lotteryBowl.Add(i);
+            }
+            else if (tiers[i].endLevel <= gameManager.CurrentWaveIndex)
+            {
+                // if it contains the index, remove one instance of that index
+                if (lotteryBowl.Contains(i))
+                {
+                    lotteryBowl.Remove(i);
+                }
+
+            }
+        }
+        Debug.Log("Bowl: " + string.Join(", ", lotteryBowl));
+    }
 
 }
 
@@ -112,6 +136,15 @@ public class Wave
     public List<string> monstersToSpawn = new List<string>();
     public int monsterCount;
     public float spawnInterval;
+}
+
+[System.Serializable]
+public class MonsterTier
+{
+    public List<string> monsters;
+    public int startLevel;
+    public int stopAddingLevel;
+    public int endLevel;
 }
 
 

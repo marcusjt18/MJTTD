@@ -134,10 +134,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1.4
   maxHealth: 5
+  goldYield: 2
   healthBar: {fileID: 3454385888579841650}
   id: rat
-  minWave: 1
-  maxWave: 2147483647
 --- !u!50 &6946071272922352565
 Rigidbody2D:
   serializedVersion: 4
