@@ -32,7 +32,7 @@ public class ParticleSystemPool : MonoBehaviour
         }
 
         // Don't destroy this object when changing scenes
-        DontDestroyOnLoad(gameObject);
+
     }
 
     void Start()

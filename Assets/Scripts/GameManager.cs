@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +14,12 @@ public class GameManager : MonoBehaviour
     {
         get { return instance; }
     }
+
+    [SerializeField]
+    private GameObject gameOverPanel;
+
+    [SerializeField]
+    private TMP_Text resultText;
 
     private LevelManager levelManager;
 
@@ -29,6 +38,7 @@ public class GameManager : MonoBehaviour
     public int MonsterCounter { get => monsterCounter; set => monsterCounter = value; }
     public List<TileScript> Path { get => path; set => path = value; }
     public int CurrentWaveIndex { get => currentWaveIndex; set => currentWaveIndex = value; }
+    public GameObject GameOverPanel { get => gameOverPanel; set => gameOverPanel = value; }
 
     private bool waveOngoing = false;
 
@@ -45,9 +55,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // Set the instance and persist it between scenes
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
         }
 
         levelManager = LevelManager.Instance;
@@ -81,4 +89,25 @@ public class GameManager : MonoBehaviour
         }
 
     }
+
+    public void CheckGameOver(int health)
+    {
+        if (health <= 0)
+        {
+            resultText.text = (currentWaveIndex - 1).ToString();
+            GameOverPanel.SetActive(true);
+
+            Time.timeScale = 0;
+        }
+    }
+
+    public void Replay()
+    {
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1;
+
+    }
+
+
 }

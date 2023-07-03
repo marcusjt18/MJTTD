@@ -29,7 +29,6 @@ public class TextPool : MonoBehaviour
             Destroy(gameObject);
         }
 
-        DontDestroyOnLoad(gameObject);
     }
 
     void Start()

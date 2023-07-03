@@ -29,7 +29,6 @@ public class MonsterPool : MonoBehaviour
             Destroy(gameObject);
         }
 
-        DontDestroyOnLoad(gameObject);
     }
 
     void Start()

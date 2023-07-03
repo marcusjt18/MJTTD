@@ -29,7 +29,6 @@ public class ProjectilePool : MonoBehaviour
             Destroy(gameObject);
         }
 
-        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
