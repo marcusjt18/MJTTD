@@ -101,10 +101,12 @@ public class MonsterSpawner : MonoBehaviour
         return wave;
     }
 
+
+    #region Populate Bowl
+    private int activeNonEndTiers = 0;
     public void PopulateBowl()
     {
-        // HUSK SJEKK OM 50 ER ET PASSE TALL FOR DETTE
-        if (gameManager.CurrentWaveIndex >= tiers[tiers.Count - 1].startLevel && lotteryBowl.Count > 50)
+        if (gameManager.CurrentWaveIndex >= tiers[tiers.Count - 1].startLevel && activeNonEndTiers <= 0)
         {
             return;
         }
@@ -114,6 +116,10 @@ public class MonsterSpawner : MonoBehaviour
             if (tiers[i].startLevel <= gameManager.CurrentWaveIndex && gameManager.CurrentWaveIndex < tiers[i].stopAddingLevel && tiers[i].endLevel > gameManager.CurrentWaveIndex)
             {
                 lotteryBowl.Add(i);
+                if (i != (tiers.Count-1))
+                {
+                    activeNonEndTiers++;
+                }
             }
             else if (tiers[i].endLevel <= gameManager.CurrentWaveIndex)
             {
@@ -121,12 +127,15 @@ public class MonsterSpawner : MonoBehaviour
                 if (lotteryBowl.Contains(i))
                 {
                     lotteryBowl.Remove(i);
+                    activeNonEndTiers--;
                 }
 
             }
         }
-        Debug.Log("Bowl: " + string.Join(", ", lotteryBowl));
+        //Debug.Log("ANET: " + activeNonEndTiers);
+        //Debug.Log("Bowl: " + string.Join(", ", lotteryBowl));
     }
+    #endregion
 
 }
 

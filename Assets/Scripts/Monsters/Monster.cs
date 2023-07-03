@@ -18,6 +18,9 @@ public abstract class Monster : MonoBehaviour
     [SerializeField]
     private int goldYield = 5;
 
+    [SerializeField]
+    private int damageToPlayer = 1;
+
 
     [SerializeField]
     private MonsterHealthBar healthBar;
@@ -94,12 +97,17 @@ public abstract class Monster : MonoBehaviour
         GameManager.Instance.MonsterCounter--;
         if (reachedEnd)
         {
-            // lose life
+            Player.Instance.Health -= damageToPlayer;
         }
         else
         {
+            Player.Instance.Gold += goldYield;
+            TextPool.Instance.SpawnFromPool("FloatingGoldText", transform.position, Quaternion.identity, "+" + goldYield.ToString());
             GameObject effect = particleSystemPool.SpawnFromPoolWithReturn("deathEffect", transform.position, Quaternion.identity, deathEffectDuration);
         }
+
+        Debug.Log("Life: " + Player.Instance.Health);
+        Debug.Log("Gold: " + Player.Instance.Gold);
     }
 
     public void ResetMonster()
