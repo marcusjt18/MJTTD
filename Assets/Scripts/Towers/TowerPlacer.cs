@@ -30,7 +30,7 @@ public class TowerPlacer : MonoBehaviour
         }
     }
 
-    public void PlaceTower(Vector3 position)
+    public Tower PlaceTower(Vector3 position)
     {
         // Check if a tower is selected.
         if (CurrentTowerId != null)
@@ -42,12 +42,15 @@ public class TowerPlacer : MonoBehaviour
             Tower newTower = Instantiate(towerPrefab.Prefab, position, Quaternion.identity, transform).GetComponent<Tower>();
             newTower.gameObject.AddComponent<DepthSorter>();
 
+            return newTower;
+
             // You could add additional logic here, like subtracting the cost of the tower from the player's resources.
         }
         else
         {
             Debug.LogError("No tower selected!");
         }
+        return null;
     }
 
     public void SelectTower(string id)

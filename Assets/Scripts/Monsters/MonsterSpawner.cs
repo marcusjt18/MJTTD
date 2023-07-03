@@ -66,7 +66,7 @@ public class MonsterSpawner : MonoBehaviour
     {
         Wave wave = new Wave();
 
-        int monsterCount = 2 + Mathf.RoundToInt(level * 1.4f);
+        int monsterCount = 2 + Mathf.RoundToInt(level * 1.3f);
         wave.monsterCount = monsterCount;
         switch (level)
         {

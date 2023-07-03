@@ -5,7 +5,6 @@ using UnityEngine;
 public class TileScript : MonoBehaviour
 {
     private bool isWalkable = true;
-    private bool hasTower = false;
     private int x;
     private int y;
     private LevelManager levelManager;
@@ -13,9 +12,11 @@ public class TileScript : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     public bool IsWalkable { get => isWalkable; set => isWalkable = value; }
-    public bool HasTower { get => hasTower; set => hasTower = value; }
     public int X { get => x; set => x = value; }
     public int Y { get => y; set => y = value; }
+
+    public Tower Tower { get; set; }
+
 
     public int gCost; // cost from the start node to this node
     public int hCost; // heuristic cost from this node to the end node
@@ -68,7 +69,7 @@ public class TileScript : MonoBehaviour
         Debug.Log(spriteRenderer.bounds.size);
         if (Input.GetMouseButtonDown(0) && !GameManager.Instance.WaveOngoing)
         {         
-            if (!HasTower && IsWalkable)
+            if (!Tower && IsWalkable)
             {
                 isWalkable = false;
                 if (levelManager.PathFinder.FindPath(levelManager.StartTile, levelManager.EndTile) == null)
@@ -83,10 +84,20 @@ public class TileScript : MonoBehaviour
                     Vector3 towerPosition = new Vector3(tilePosition.x, tilePosition.y + GameManager.Instance.TowerPlacer.TowerDict[currentTower].transform.localScale.y / 2, tilePosition.z);
 
                     // Call the PlaceTower method of the TowerPlacer.
-                    GameManager.Instance.TowerPlacer.PlaceTower(towerPosition);
-                    HasTower = true;
+                    Tower tower = GameManager.Instance.TowerPlacer.PlaceTower(towerPosition);
+                    Tower = tower;
                 }
             
+            }
+            else
+            {
+                if (Tower)
+                {
+                    Destroy(Tower.gameObject);
+                    Tower = null;
+                    isWalkable = true;
+                }
+                
             }
         }
     }
