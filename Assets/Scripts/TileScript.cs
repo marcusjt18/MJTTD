@@ -126,7 +126,7 @@ public class TileScript : MonoBehaviour
             if (levelManager.PathFinder.FindPath(levelManager.StartTile, levelManager.EndTile) == null)
             {
                 isWalkable = true;
-                Debug.Log("This would hinder the path completely. ILLEGAL!!!");
+                UIManager.Instance.DisplayCannotPlaceTowerText();
             }
             else
             {

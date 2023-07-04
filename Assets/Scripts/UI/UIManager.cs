@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
     private TMP_Text healthText;
     [SerializeField]
     private TMP_Text goldText;
+    [SerializeField]
+    private TMP_Text cannotPlaceTowerText;
 
     public TextAnimations animator;
 
@@ -79,6 +81,29 @@ public class UIManager : MonoBehaviour
         healthText.text = health.ToString();
 
     }
+
+    public void DisplayCannotPlaceTowerText()
+    {
+        // Make sure the text is not already displaying.
+        if (!cannotPlaceTowerText.gameObject.activeInHierarchy)
+        {
+            // Display the text.
+            cannotPlaceTowerText.gameObject.SetActive(true);
+
+            // Start the coroutine to hide the text after 1 second.
+            StartCoroutine(HideCannotPlaceTowerTextAfter1Second());
+        }
+    }
+
+    private IEnumerator HideCannotPlaceTowerTextAfter1Second()
+    {
+        // Wait for 1 second.
+        yield return new WaitForSeconds(1f);
+
+        // Hide the text.
+        cannotPlaceTowerText.gameObject.SetActive(false);
+    }
+
 
 
 }
