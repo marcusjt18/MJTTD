@@ -7,6 +7,9 @@ public class TowerPlacer : MonoBehaviour
     [SerializeField]
     private List<Tower> towerPrefabs;
 
+    [SerializeField]
+    private GameObject ghostTower;
+
     // A dictionary to store the tower prefabs with their identifier strings.
     private Dictionary<string, Tower> towerDict = new Dictionary<string, Tower>();
 
@@ -14,6 +17,7 @@ public class TowerPlacer : MonoBehaviour
     private string currentTowerId = "basic";
     public string CurrentTowerId { get => currentTowerId; set => currentTowerId = value; }
     public Dictionary<string, Tower> TowerDict { get => towerDict; set => towerDict = value; }
+    public GameObject GhostTower { get => ghostTower; set => ghostTower = value; }
 
     private void Awake()
     {
@@ -60,6 +64,8 @@ public class TowerPlacer : MonoBehaviour
         {
             // Select the tower.
             currentTowerId = id;
+
+            SetGhostTowerSprite(TowerDict[id]);
         }
         else
         {
@@ -67,16 +73,42 @@ public class TowerPlacer : MonoBehaviour
         }
     }
 
+    public void DeselectTower()
+    {
+        currentTowerId = null;
+
+        if (GhostTower != null)
+        {
+            GhostTower.SetActive(false);
+        }
+    }
+
+    private void SetGhostTowerSprite(Tower tower)
+    {
+        SpriteRenderer ghostTowerRenderer = GhostTower.GetComponent<SpriteRenderer>();
+        SpriteRenderer towerRenderer = tower.Prefab.GetComponent<SpriteRenderer>();
+
+        if (ghostTowerRenderer != null && towerRenderer != null)
+        {
+            ghostTowerRenderer.sprite = towerRenderer.sprite;
+        }
+        else
+        {
+            Debug.LogError("Ghost Tower or Selected Tower has no SpriteRenderer attached.");
+        }
+    }
+
     private void Update()
     {
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.Escape))
         {
-            SelectTower("wolf");
+            DeselectTower();
         }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            SelectTower("basic");
-        }
+    }
+
+    private void Start()
+    {
+        GhostTower.SetActive(false);
     }
 }
 

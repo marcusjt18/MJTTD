@@ -7,20 +7,6 @@ using TMPro;
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    private TMP_Text healthText;
-    [SerializeField]
-    private TMP_Text goldText;
-
-    public TextAnimations animator;
-
-    //For the gold text animation
-    private Coroutine scaleCoroutine;
-    private Vector3 originalScale;
-    private Coroutine healthShakeCoroutine;
-    private Vector3 originalHealthTextPosition;
-
-
-    [SerializeField]
     private int health;
     [SerializeField]
     private int gold;
@@ -33,18 +19,7 @@ public class Player : MonoBehaviour
     public void LoseHealth(int amount)
     {
         health -= amount;
-        healthText.text = health.ToString();
-
-        // Stop the currently running ShakeText coroutine if it exists
-        if (healthShakeCoroutine != null)
-        {
-            StopCoroutine(healthShakeCoroutine);
-            healthText.transform.localPosition = originalHealthTextPosition;
-        }
-        // Start a new ShakeText coroutine
-        originalHealthTextPosition = healthText.transform.localPosition;
-        healthShakeCoroutine = StartCoroutine(animator.ShakeText(healthText, 0.3f, 10f));
-
+        UIManager.Instance.UpdateHealthTextWithAnimation(health);
         GameManager.Instance.CheckGameOver(health);
     }
 
@@ -53,19 +28,12 @@ public class Player : MonoBehaviour
     public void GainGold(int amount)
     {
         gold += amount;
-        goldText.text = gold.ToString();
-        if (scaleCoroutine != null) // if a scaleCoroutine is running, stop it
-        {
-            StopCoroutine(scaleCoroutine);
-            goldText.transform.localScale = originalScale; // reset to original scale
-        }
-        originalScale = goldText.transform.localScale; // remember the original scale
-        scaleCoroutine = StartCoroutine(animator.ScaleTextUpAndDown(goldText, 0.2f));
+        UIManager.Instance.UpdateGoldTextWithAnimation(gold);
     }
     public void SpendGold(int amount)
     {
         gold -= amount;
-        goldText.text = gold.ToString();
+        UIManager.Instance.UpdateGoldText(gold);
     }
 
 
@@ -99,8 +67,8 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        healthText.text = health.ToString();
-        goldText.text = gold.ToString();
+        UIManager.Instance.UpdateHealthText(health);
+        UIManager.Instance.UpdateGoldText(gold);
 
     }
 

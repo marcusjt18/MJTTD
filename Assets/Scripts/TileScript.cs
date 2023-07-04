@@ -63,42 +63,93 @@ public class TileScript : MonoBehaviour
         }
     }
 
+    private void OnMouseEnter()
+    {
+        if (!GameManager.Instance.WaveOngoing && GameManager.Instance.TowerPlacer.CurrentTowerId != null && GameManager.Instance.TowerPlacer.GhostTower != null)
+        {
+            Vector3 tilePosition = transform.position;
+            Vector3 ghostTowerPosition = new Vector3(tilePosition.x, tilePosition.y + GameManager.Instance.TowerPlacer.GhostTower.transform.localScale.y / 2, tilePosition.z);
+            GameManager.Instance.TowerPlacer.GhostTower.transform.position = ghostTowerPosition;
+            GameManager.Instance.TowerPlacer.GhostTower.SetActive(true);
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        if (GameManager.Instance.TowerPlacer.GhostTower != null)
+        {
+            GameManager.Instance.TowerPlacer.GhostTower.SetActive(false);
+        }
+    }
 
     private void OnMouseOver()
     {
-        Debug.Log(spriteRenderer.bounds.size);
-        if (Input.GetMouseButtonDown(0) && !GameManager.Instance.WaveOngoing)
-        {         
-            if (!Tower && IsWalkable)
-            {
-                isWalkable = false;
-                if (levelManager.PathFinder.FindPath(levelManager.StartTile, levelManager.EndTile) == null)
-                {
-                    isWalkable = true;
-                    Debug.Log("This would hinder the path completely. ILLEGAL!!!");
-                }
-                else
-                {
-                    string currentTower = GameManager.Instance.TowerPlacer.CurrentTowerId;
-                    Vector3 tilePosition = transform.position;
-                    Vector3 towerPosition = new Vector3(tilePosition.x, tilePosition.y + GameManager.Instance.TowerPlacer.TowerDict[currentTower].transform.localScale.y / 2, tilePosition.z);
+        if (GameManager.Instance.TowerPlacer.GhostTower != null)
+        {
+            SpriteRenderer ghostTowerRenderer = GameManager.Instance.TowerPlacer.GhostTower.GetComponent<SpriteRenderer>();
+            float currentAlpha = ghostTowerRenderer.color.a; // Store the current alpha value
 
-                    // Call the PlaceTower method of the TowerPlacer.
-                    Tower tower = GameManager.Instance.TowerPlacer.PlaceTower(towerPosition);
-                    Tower = tower;
-                }
-            
+            // Check if the tile is walkable and doesn't already have a tower
+            if (IsWalkable && Tower == null)
+            {
+                ghostTowerRenderer.color = new Color(0, 1, 0, currentAlpha); // Green for placeable, while preserving alpha
             }
             else
             {
-                if (Tower)
-                {
-                    Destroy(Tower.gameObject);
-                    Tower = null;
-                    isWalkable = true;
-                }
-                
+                ghostTowerRenderer.color = new Color(1, 0, 0, currentAlpha); // Red for not placeable, while preserving alpha
             }
+
+            Vector3 tilePosition = transform.position;
+            Vector3 ghostTowerPosition = new Vector3(tilePosition.x, tilePosition.y + GameManager.Instance.TowerPlacer.GhostTower.transform.localScale.y / 2, tilePosition.z);
+            GameManager.Instance.TowerPlacer.GhostTower.transform.position = ghostTowerPosition;
+        }
+
+        if (Input.GetMouseButtonDown(0) && !GameManager.Instance.WaveOngoing)
+        {
+            PlaceTowerOnTile();
+        }
+    }
+
+
+
+
+    private void PlaceTowerOnTile()
+    {
+        if (GameManager.Instance.TowerPlacer.CurrentTowerId == null)
+        {
+            return;
+        }
+
+        if (!Tower && IsWalkable)
+        {
+            isWalkable = false;
+            if (levelManager.PathFinder.FindPath(levelManager.StartTile, levelManager.EndTile) == null)
+            {
+                isWalkable = true;
+                Debug.Log("This would hinder the path completely. ILLEGAL!!!");
+            }
+            else
+            {
+                string currentTower = GameManager.Instance.TowerPlacer.CurrentTowerId;
+                Vector3 tilePosition = transform.position;
+                Vector3 towerPosition = new Vector3(tilePosition.x, tilePosition.y + GameManager.Instance.TowerPlacer.TowerDict[currentTower].transform.localScale.y / 2, tilePosition.z);
+
+                // Call the PlaceTower method of the TowerPlacer.
+                Tower tower = GameManager.Instance.TowerPlacer.PlaceTower(towerPosition);
+                Tower = tower;
+                GameManager.Instance.TowerPlacer.GhostTower.SetActive(false);
+            }
+
+        }
+        else
+        {
+            if (Tower)
+            {
+                Destroy(Tower.gameObject);
+                Tower = null;
+                isWalkable = true;
+            }
+
         }
     }
 
