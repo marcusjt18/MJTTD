@@ -24,6 +24,16 @@ public abstract class Tower : MonoBehaviour
     // The time since the tower last attacked
     private float attackCooldown = 0.0f;
 
+    private int level = 1;
+    private int maxLevel = 10;
+
+    [SerializeField]
+    private int cost = 10;
+    [SerializeField]
+    private int upgradeCost = 10;
+
+    private int sellPrice;
+
     public Monster Target { get; set; }
 
     public string Id { get => id; set => id = value; }
@@ -34,6 +44,8 @@ public abstract class Tower : MonoBehaviour
     public int MinDamage { get => minDamage; set => minDamage = value; }
     public string ProjectileTag { get => projectileTag; set => projectileTag = value; }
     public float AttackSpeed { get => attackSpeed; set => attackSpeed = value; }
+    public int Level { get => level; set => level = value; }
+    public int MaxLevel { get => maxLevel; set => maxLevel = value; }
 
     private List<Monster> monstersInRange = new List<Monster>();
 
@@ -42,6 +54,8 @@ public abstract class Tower : MonoBehaviour
 
         CircleCollider2D circleCollider = GetComponent<CircleCollider2D>();
         circleCollider.radius = range;
+
+        sellPrice = cost / 2;
 
     }
 
@@ -115,6 +129,26 @@ public abstract class Tower : MonoBehaviour
     public void DisplayTowerUI()
     {
         UIManager.Instance.ShowTowerUI(this);
+    }
+
+    public void LevelUp()
+    {
+        if (level >= maxLevel)
+        {
+            return;
+        }
+
+        if (Player.Instance.Gold >= upgradeCost)
+        {
+            Player.Instance.SpendGold(upgradeCost);
+
+            //increase damage in a sensible way
+
+
+            level++;
+            sellPrice = upgradeCost / 2;
+            upgradeCost *= 2;
+        }
     }
 }
 

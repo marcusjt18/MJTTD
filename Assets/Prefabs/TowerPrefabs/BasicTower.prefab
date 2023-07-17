@@ -52,7 +52,7 @@ MonoBehaviour:
   maxDamage: 2
   prefab: {fileID: 3896741727868723008}
   projectileTag: basicArrow
-  attackSpeed: 1
+  attackSpeed: 0.2
 --- !u!58 &670937401241351836
 CircleCollider2D:
   m_ObjectHideFlags: 0
