@@ -106,7 +106,14 @@ public class TileScript : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && !GameManager.Instance.WaveOngoing)
         {
-            PlaceTowerOnTile();
+            if (Tower)
+            {
+                Tower.DisplayTowerUI();
+            }
+            else
+            {
+                PlaceTowerOnTile();
+            }
         }
     }
 

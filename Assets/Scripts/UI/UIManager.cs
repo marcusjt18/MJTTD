@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class UIManager : MonoBehaviour
     private TMP_Text goldText;
     [SerializeField]
     private TMP_Text cannotPlaceTowerText;
+
+    [SerializeField]
+    private List<TowerUIWithTag> TowerUIs;
+
+    private Dictionary<string, GameObject> towerUIDict;
 
     public TextAnimations animator;
 
@@ -41,6 +47,15 @@ public class UIManager : MonoBehaviour
             instance = this;
         }
 
+    }
+
+    private void Start()
+    {
+        towerUIDict = new Dictionary<string, GameObject>();
+        foreach (TowerUIWithTag ui in TowerUIs)
+        {
+            towerUIDict.Add(ui.id, ui.towerUI);
+        }
     }
 
     public void UpdateGoldTextWithAnimation(int gold)
@@ -104,6 +119,32 @@ public class UIManager : MonoBehaviour
         cannotPlaceTowerText.gameObject.SetActive(false);
     }
 
+    internal void ShowTowerUI(Tower tower)
+    {
+        // Check if the tag exists in the dictionary
+        if (towerUIDict.ContainsKey(tower.Id))
+        {
+
+            // We can deselect a tower if we show a ui, no need for the ghost tower while we look at ui
+            GameManager.Instance.DeselectTower();
+
+            TowerUI tui = towerUIDict[tower.Id].GetComponent<TowerUI>();
+
+            tui.UpdateInfoText(tower);
+            tui.Show();
+        }
+        else
+        {
+            // Handle the case when the tag is not found
+            Debug.LogWarning("TowerUI with tag " + tower.Id + " not found!");
+        }
+    }
+}
 
 
+[System.Serializable]
+public class TowerUIWithTag
+{
+    public string id;
+    public GameObject towerUI;
 }

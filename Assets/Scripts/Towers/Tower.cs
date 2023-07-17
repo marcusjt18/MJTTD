@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,6 @@ public abstract class Tower : MonoBehaviour
     private int maxDamage;
     [SerializeField]
     private GameObject prefab;
-
     [SerializeField]
     private string projectileTag;
 
@@ -33,6 +33,7 @@ public abstract class Tower : MonoBehaviour
     public int MaxDamage { get => maxDamage; set => maxDamage = value; }
     public int MinDamage { get => minDamage; set => minDamage = value; }
     public string ProjectileTag { get => projectileTag; set => projectileTag = value; }
+    public float AttackSpeed { get => attackSpeed; set => attackSpeed = value; }
 
     private List<Monster> monstersInRange = new List<Monster>();
 
@@ -61,7 +62,7 @@ public abstract class Tower : MonoBehaviour
             if (attackCooldown <= 0)
             {
                 Attack();
-                attackCooldown = attackSpeed;
+                attackCooldown = AttackSpeed;
             }
         }
 
@@ -111,5 +112,9 @@ public abstract class Tower : MonoBehaviour
         return UnityEngine.Random.Range(minDamage, maxDamage + 1);
     }
 
+    public void DisplayTowerUI()
+    {
+        UIManager.Instance.ShowTowerUI(this);
+    }
 }
 
