@@ -108,7 +108,7 @@ public class TileScript : MonoBehaviour
         {
             if (Tower)
             {
-                Tower.DisplayTowerUI();
+                UIManager.Instance.ShowTowerUI(Tower, this);
             }
             else
             {
@@ -145,16 +145,6 @@ public class TileScript : MonoBehaviour
                 Tower tower = GameManager.Instance.TowerPlacer.PlaceTower(towerPosition);
                 Tower = tower;
                 GameManager.Instance.TowerPlacer.GhostTower.SetActive(false);
-            }
-
-        }
-        else
-        {
-            if (Tower)
-            {
-                Destroy(Tower.gameObject);
-                Tower = null;
-                isWalkable = true;
             }
 
         }

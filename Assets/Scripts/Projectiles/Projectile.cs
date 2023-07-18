@@ -71,13 +71,6 @@ public abstract class Projectile : MonoBehaviour
             monster.TakeDamage(damage);
             GameObject effect = particleSystemPool.SpawnFromPoolWithReturn("hitEffect", transform.position, Quaternion.identity, hitEffectDuration);
 
-
-
-            //Canvas canvas = FindObjectOfType<Canvas>();
-            //GameObject damageText = Instantiate(damageTextPrefab, transform.position, Quaternion.identity, canvas.transform);
-            //damageText.GetComponent<TMPro.TextMeshProUGUI>().text = damage.ToString();
-            //Destroy(damageText, 0.2f);
-
             ProjectilePool.Instance.ReturnToPool(projectileTag, gameObject);
         }
     }

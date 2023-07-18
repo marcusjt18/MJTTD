@@ -34,6 +34,8 @@ public abstract class Tower : MonoBehaviour
 
     private int sellPrice;
 
+    private int talentPoints = 0;
+
     public Monster Target { get; set; }
 
     public string Id { get => id; set => id = value; }
@@ -46,6 +48,9 @@ public abstract class Tower : MonoBehaviour
     public float AttackSpeed { get => attackSpeed; set => attackSpeed = value; }
     public int Level { get => level; set => level = value; }
     public int MaxLevel { get => maxLevel; set => maxLevel = value; }
+    public int SellPrice { get => sellPrice; set => sellPrice = value; }
+    public int UpgradeCost { get => upgradeCost; set => upgradeCost = value; }
+    public int TalentPoints { get => talentPoints; set => talentPoints = value; }
 
     private List<Monster> monstersInRange = new List<Monster>();
 
@@ -55,7 +60,7 @@ public abstract class Tower : MonoBehaviour
         CircleCollider2D circleCollider = GetComponent<CircleCollider2D>();
         circleCollider.radius = range;
 
-        sellPrice = cost / 2;
+        SellPrice = cost / 2;
 
     }
 
@@ -125,12 +130,6 @@ public abstract class Tower : MonoBehaviour
     {
         return UnityEngine.Random.Range(minDamage, maxDamage + 1);
     }
-
-    public void DisplayTowerUI()
-    {
-        UIManager.Instance.ShowTowerUI(this);
-    }
-
     public void LevelUp()
     {
         if (level >= maxLevel)
@@ -138,17 +137,30 @@ public abstract class Tower : MonoBehaviour
             return;
         }
 
-        if (Player.Instance.Gold >= upgradeCost)
+        if (Player.Instance.Gold >= UpgradeCost)
         {
-            Player.Instance.SpendGold(upgradeCost);
+            Player.Instance.SpendGold(UpgradeCost);
 
             //increase damage in a sensible way
+            minDamage *= 2;
+            maxDamage = minDamage + (level * 2);
 
+            TalentPoints++;
 
             level++;
-            sellPrice = upgradeCost / 2;
-            upgradeCost *= 2;
+            SellPrice = UpgradeCost / 2;
+            UpgradeCost *= 2;
         }
+        else
+        {
+            UIManager.Instance.DisplayNoFundsText();
+        }
+    }
+
+    public void SellTower()
+    {
+        Player.Instance.GainGold(sellPrice);
+        Destroy(gameObject);
     }
 }
 

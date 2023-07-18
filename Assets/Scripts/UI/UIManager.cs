@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour
     private TMP_Text goldText;
     [SerializeField]
     private TMP_Text cannotPlaceTowerText;
+    [SerializeField]
+    private TMP_Text noFundsText;
 
     [SerializeField]
     private List<TowerUIWithTag> TowerUIs;
@@ -106,20 +108,33 @@ public class UIManager : MonoBehaviour
             cannotPlaceTowerText.gameObject.SetActive(true);
 
             // Start the coroutine to hide the text after 1 second.
-            StartCoroutine(HideCannotPlaceTowerTextAfter1Second());
+            StartCoroutine(HideTextAfter1Second(cannotPlaceTowerText));
         }
     }
 
-    private IEnumerator HideCannotPlaceTowerTextAfter1Second()
+    public void DisplayNoFundsText()
+    {
+        // Make sure the text is not already displaying.
+        if (!noFundsText.gameObject.activeInHierarchy)
+        {
+            // Display the text.
+            noFundsText.gameObject.SetActive(true);
+
+            // Start the coroutine to hide the text after 1 second.
+            StartCoroutine(HideTextAfter1Second(noFundsText));
+        }
+    }
+
+    private IEnumerator HideTextAfter1Second(TMP_Text text)
     {
         // Wait for 1 second.
         yield return new WaitForSeconds(1f);
 
         // Hide the text.
-        cannotPlaceTowerText.gameObject.SetActive(false);
+        text.gameObject.SetActive(false);
     }
 
-    internal void ShowTowerUI(Tower tower)
+    internal void ShowTowerUI(Tower tower, TileScript tile)
     {
         // Check if the tag exists in the dictionary
         if (towerUIDict.ContainsKey(tower.Id))
@@ -129,7 +144,8 @@ public class UIManager : MonoBehaviour
             GameManager.Instance.DeselectTower();
 
             TowerUI tui = towerUIDict[tower.Id].GetComponent<TowerUI>();
-
+            tui.SelectTowerForUI(tower);
+            tui.SelectTileForUI(tile);
             tui.UpdateInfoText(tower);
             tui.Show();
         }
