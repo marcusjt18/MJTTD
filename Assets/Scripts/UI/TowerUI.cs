@@ -21,8 +21,8 @@ public class TowerUI : MonoBehaviour
     [SerializeField]
     private TMP_Text talentPointsText;
 
-    [SerializeField]
-    public List<GameObject> Talents = new List<GameObject>();
+    private List<Talent> Talents = new List<Talent>();
+    private bool talentsAdded = false;
 
     private Tower currentTower;
     private TileScript currentTile;
@@ -32,6 +32,11 @@ public class TowerUI : MonoBehaviour
     public void Show()
     {
         gameObject.SetActive(true);
+
+        if (!talentsAdded)
+        {
+            AddTalents();
+        }
 
         UpdateTalents();
     }
@@ -53,10 +58,9 @@ public class TowerUI : MonoBehaviour
 
     private void UpdateTalents()
     {
-
-        foreach (GameObject talentObject in Talents)
+        foreach (Talent talent in Talents)
         {
-            Talent talent = talentObject.GetComponent<Talent>();
+            talent.Initialize();
 
             if (currentTower.TalentIds.Contains(talent.Id))
             {
@@ -69,6 +73,18 @@ public class TowerUI : MonoBehaviour
             
             talent.UpdateColor();
         }
+    }
+
+    public void AddTalents()
+    {
+        Talent[] talents = GetComponentsInChildren<Talent>(true);
+        foreach (Talent t in talents)
+        {
+            Talents.Add(t);
+        }
+
+        talentsAdded = true;
+
     }
 
     public void SelectTowerForUI(Tower tower)

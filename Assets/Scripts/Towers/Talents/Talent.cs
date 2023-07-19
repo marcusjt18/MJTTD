@@ -8,33 +8,52 @@ public abstract class Talent : MonoBehaviour
     [SerializeField]
     public List<GameObject> Dependencies = new List<GameObject>();
 
-    [SerializeField]
     private Image talentImage;
-    [SerializeField]
     private Image borderImage;
 
     [SerializeField]
     private int id;
 
-    [SerializeField]
-    private GameObject parentUI;
+    private TowerUI parentUI;
     public bool IsActivated { get;  set; }
     public int Id { get => id; set => id = value; }
 
+    private bool initialized = false;
+
     private Button talentButton;
     private void Start()
-    {
-        talentButton = GetComponent<Button>();
+    { 
 
-        // Ensure there is a Button component attached
-        if (talentButton == null)
+    }
+
+    public void Initialize()
+    {
+        if (initialized) return;
+
+        parentUI = GetComponentInParent<TowerUI>();
+
+        Image[] images = GetComponentsInChildren<Image>(true);
+
+        foreach (Image image in images)
         {
-            Debug.LogError("No Button component attached to Talent object.");
-            return;
+            if (image.gameObject.name == "TalentImage")
+            {
+                talentImage = image;
+            }
+            else if (image.gameObject.name == "Border")
+            {
+                borderImage = image;
+            }
         }
+
+        talentButton = GetComponent<Button>();
 
         // Add a listener to the button's OnClick event
         talentButton.onClick.AddListener(() => Activate(parentUI.GetComponent<TowerUI>().CurrentTower));
+
+        UpdateColor();
+
+        initialized = true;
     }
 
     public bool CanActivate()
@@ -71,7 +90,7 @@ public abstract class Talent : MonoBehaviour
 
         UpdateColor();
 
-        parentUI.GetComponent<TowerUI>().UpdateInfoText(tower);
+        parentUI.UpdateInfoText(tower);
     }
 
     public abstract void ApplyEffect(Tower tower);
