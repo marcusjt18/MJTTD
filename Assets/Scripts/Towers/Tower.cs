@@ -13,6 +13,9 @@ public abstract class Tower : MonoBehaviour
     private int minDamage;
     [SerializeField]
     private int maxDamage;
+    private float damageMultiplier = 1.0f;
+
+
     [SerializeField]
     private GameObject prefab;
     [SerializeField]
@@ -36,6 +39,8 @@ public abstract class Tower : MonoBehaviour
 
     private int talentPoints = 0;
 
+    private HashSet<int> talentIds = new HashSet<int>();
+
     public Monster Target { get; set; }
 
     public string Id { get => id; set => id = value; }
@@ -51,6 +56,9 @@ public abstract class Tower : MonoBehaviour
     public int SellPrice { get => sellPrice; set => sellPrice = value; }
     public int UpgradeCost { get => upgradeCost; set => upgradeCost = value; }
     public int TalentPoints { get => talentPoints; set => talentPoints = value; }
+    public float DamageMultiplier { get => damageMultiplier; set => damageMultiplier = value; }
+    public HashSet<int> TalentIds { get => talentIds; set => talentIds = value; }
+    public int Cost { get => cost; set => cost = value; }
 
     private List<Monster> monstersInRange = new List<Monster>();
 
@@ -60,7 +68,7 @@ public abstract class Tower : MonoBehaviour
         CircleCollider2D circleCollider = GetComponent<CircleCollider2D>();
         circleCollider.radius = range;
 
-        SellPrice = cost / 2;
+        SellPrice = Cost / 2;
 
     }
 
@@ -126,10 +134,23 @@ public abstract class Tower : MonoBehaviour
         }
     }
 
+    public int ApplyMultiplierToDamage(int dmg)
+    {
+        return Mathf.RoundToInt(dmg*damageMultiplier);
+    }
     public int CalculateDamage()
     {
-        return UnityEngine.Random.Range(minDamage, maxDamage + 1);
+        int min = ApplyMultiplierToDamage(minDamage);
+        int max = ApplyMultiplierToDamage(maxDamage);
+
+        return UnityEngine.Random.Range(min, max + 1);
     }
+
+    public void AddTalentId(int id)
+    {
+        talentIds.Add(id);
+    }
+
     public void LevelUp()
     {
         if (level >= maxLevel)

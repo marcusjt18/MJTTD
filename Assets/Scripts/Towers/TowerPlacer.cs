@@ -46,9 +46,9 @@ public class TowerPlacer : MonoBehaviour
             Tower newTower = Instantiate(towerPrefab.Prefab, position, Quaternion.identity, transform).GetComponent<Tower>();
             newTower.gameObject.AddComponent<DepthSorter>();
 
-            return newTower;
+            Player.Instance.SpendGold(newTower.Cost);
 
-            // You could add additional logic here, like subtracting the cost of the tower from the player's resources.
+            return newTower;
         }
         else
         {

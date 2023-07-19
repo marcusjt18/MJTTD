@@ -47,12 +47,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: wolf
-  range: 10
-  minDamage: 0
-  maxDamage: 0
+  range: 1
+  minDamage: 8
+  maxDamage: 10
   prefab: {fileID: 4589795718836687180}
   projectileTag: 
-  attackSpeed: 1
+  attackSpeed: 1.5
+  cost: 20
+  upgradeCost: 20
 --- !u!58 &-6781456173503016929
 CircleCollider2D:
   m_ObjectHideFlags: 0

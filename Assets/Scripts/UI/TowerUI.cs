@@ -21,12 +21,19 @@ public class TowerUI : MonoBehaviour
     [SerializeField]
     private TMP_Text talentPointsText;
 
+    [SerializeField]
+    public List<GameObject> Talents = new List<GameObject>();
+
     private Tower currentTower;
     private TileScript currentTile;
+
+    public Tower CurrentTower { get => currentTower; set => currentTower = value; }
 
     public void Show()
     {
         gameObject.SetActive(true);
+
+        UpdateTalents();
     }
     public void Hide()
     {
@@ -35,7 +42,7 @@ public class TowerUI : MonoBehaviour
 
     internal void UpdateInfoText(Tower tower)
     {
-        damageText.text = $"Damage: {tower.MinDamage}-{tower.MaxDamage}";
+        damageText.text = $"Damage: {tower.ApplyMultiplierToDamage(tower.MinDamage)}-{tower.ApplyMultiplierToDamage(tower.MaxDamage)}";
         speedText.text = $"Attack cooldown: {tower.AttackSpeed}";
         rangeText.text = $"Range: {tower.Range}";
         levelText.text = $"Level: {tower.Level}/{tower.MaxLevel}";
@@ -44,9 +51,29 @@ public class TowerUI : MonoBehaviour
         talentPointsText.text = $"Talent points: {tower.TalentPoints}";
     }
 
+    private void UpdateTalents()
+    {
+
+        foreach (GameObject talentObject in Talents)
+        {
+            Talent talent = talentObject.GetComponent<Talent>();
+
+            if (currentTower.TalentIds.Contains(talent.Id))
+            {
+                talent.IsActivated = true;
+            }
+            else
+            {
+                talent.IsActivated = false;
+            }
+            
+            talent.UpdateColor();
+        }
+    }
+
     public void SelectTowerForUI(Tower tower)
     {
-        currentTower = tower;
+        CurrentTower = tower;
     }
 
     public void SelectTileForUI(TileScript tile)
@@ -56,10 +83,10 @@ public class TowerUI : MonoBehaviour
 
     public void LevelUpTower()
     {
-        if (currentTower)
+        if (CurrentTower)
         {
-            currentTower.LevelUp();
-            UpdateInfoText(currentTower);
+            CurrentTower.LevelUp();
+            UpdateInfoText(CurrentTower);
         }
         else
         {
@@ -74,9 +101,9 @@ public class TowerUI : MonoBehaviour
             currentTile.Tower = null;
             currentTile.IsWalkable = true;
 
-            currentTower.SellTower();
+            CurrentTower.SellTower();
 
-            currentTower = null;
+            CurrentTower = null;
             currentTile = null;
 
             Hide();
