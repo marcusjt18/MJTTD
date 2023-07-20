@@ -14,9 +14,14 @@ public abstract class Talent : MonoBehaviour
     [SerializeField]
     private int id;
 
+    private string name;
+    private string description;
+
     private TowerUI parentUI;
     public bool IsActivated { get;  set; }
     public int Id { get => id; set => id = value; }
+    public string Description { get => description; set => description = value; }
+    public string Name { get => name; set => name = value; }
 
     private bool initialized = false;
 

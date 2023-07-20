@@ -7,6 +7,12 @@ public class DamageMultiplierTalent : Talent
     [SerializeField]
     private float multi = 0.2f;
 
+    private void Awake()
+    {
+        Name = "Damage Multiplier";
+        Description = $"Increases base damage by {multi*100}%.";
+    }
+
     public override void ApplyEffect(Tower tower)
     {
         tower.DamageMultiplier += multi;
