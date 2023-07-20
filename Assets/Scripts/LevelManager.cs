@@ -27,6 +27,8 @@ public class LevelManager : MonoBehaviour
 
 
     public GameObject rockPrefab;
+
+    [SerializeField]
     private float rockProbability = 0.11f; // chance of rock
     public Transform RockParent;
 

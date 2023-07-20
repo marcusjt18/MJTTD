@@ -6844,7 +6844,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 12c0e7eeedf53a648af6495d090c0155, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b8af4f041d5b0ff47b8db01e36f8548e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9682,6 +9682,7 @@ MonoBehaviour:
   startPortalPrefab: {fileID: 6721211242881586212, guid: 1d9a77de8229e1b42933a9b458faaee8, type: 3}
   endPortalPrefab: {fileID: 8600761570473318527, guid: 7be87d0fa38bbf34db19ea4d1e1c5ab5, type: 3}
   rockPrefab: {fileID: 2901627803744965749, guid: b4564b7809feb894e85a0bfa0b051d3c, type: 3}
+  rockProbability: 0.18
   RockParent: {fileID: 0}
   width: 18
   height: 12
