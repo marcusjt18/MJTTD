@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public abstract class Tower : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public abstract class Tower : MonoBehaviour
 
     [SerializeField]
     private GameObject prefab;
+
+    private TMP_Text levelLabel;
+
     [SerializeField]
     private string projectileTag;
 
@@ -29,6 +33,22 @@ public abstract class Tower : MonoBehaviour
 
     private int level = 1;
     private int maxLevel = 10;
+
+    private Color[] levelColors = new Color[]
+    {
+        new Color(1f, 1f, 1f, 1f), // Level 1 - white
+        new Color(1f, 0.977f, 0.610f, 1f),
+        new Color(1f, 0.961f, 0.364f, 1f),
+        new Color(1f, 0.751f, 0.364f, 1f),
+        new Color(1f, 0.534f, 0.364f, 1f),
+        new Color(1f, 0.325f, 0.289f, 1f),
+        new Color(1f, 0f, 0.093f, 1f),
+        new Color(0.64f, 0f, 0f, 1f),
+        new Color(0.45f, 0f, 0f, 1f),
+        new Color(0.251f, 0.247f, 0.288f, 1f)
+
+    };
+
 
     [SerializeField]
     private int cost = 10;
@@ -70,6 +90,8 @@ public abstract class Tower : MonoBehaviour
 
         SellPrice = Cost / 2;
 
+        levelLabel = GetComponentInChildren<TMP_Text>();
+        UpdateLevelLabel();
     }
 
 
@@ -162,6 +184,18 @@ public abstract class Tower : MonoBehaviour
         {
             Player.Instance.SpendGold(UpgradeCost);
 
+            // Apply color tinting
+            if (level < levelColors.Length)
+            {
+                GetComponent<SpriteRenderer>().color = levelColors[level];
+            }
+
+            if (level >= 7)
+            {
+                float scaleFactor = 1.06f;
+                transform.localScale *= scaleFactor;
+            }
+
             //increase damage in a sensible way
             minDamage *= 2;
             maxDamage = minDamage + (level * 2);
@@ -171,6 +205,7 @@ public abstract class Tower : MonoBehaviour
             level++;
             SellPrice = UpgradeCost / 2;
             UpgradeCost *= 2;
+            UpdateLevelLabel();
         }
         else
         {
@@ -182,6 +217,11 @@ public abstract class Tower : MonoBehaviour
     {
         Player.Instance.GainGold(sellPrice);
         Destroy(gameObject);
+    }
+
+    private void UpdateLevelLabel()
+    {
+        levelLabel.text = $"Lv. {level}";
     }
 }
 
