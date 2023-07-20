@@ -21,14 +21,19 @@ public abstract class Talent : MonoBehaviour
     private bool initialized = false;
 
     private Button talentButton;
+
+    private LineDrawer lineDrawer;
+
     private void Start()
     { 
 
     }
 
-    public void Initialize()
+    public void Initialize(LineDrawer ld)
     {
         if (initialized) return;
+
+        lineDrawer = ld;
 
         parentUI = GetComponentInParent<TowerUI>();
 
@@ -90,7 +95,13 @@ public abstract class Talent : MonoBehaviour
 
         UpdateColor();
 
+        foreach (var dependency in Dependencies)
+        {
+            lineDrawer.UpdateLineThickness(GetComponent<RectTransform>(), dependency.GetComponent<RectTransform>(), true);
+        }
+
         parentUI.UpdateInfoText(tower);
+        parentUI.UpdateTalentColors();
     }
 
     public abstract void ApplyEffect(Tower tower);
@@ -101,12 +112,12 @@ public abstract class Talent : MonoBehaviour
         if (IsActivated)
         {
             talentImage.color = Color.white;
-            borderImage.color = Color.white;
+            borderImage.color = new Color(255 / 255f, 220 / 255f, 69 / 255f, 1);
         }
         else if (CanActivate())
         {
             talentImage.color = Color.gray;
-            borderImage.color = Color.green;
+            borderImage.color = Color.white;
         }
         else
         {

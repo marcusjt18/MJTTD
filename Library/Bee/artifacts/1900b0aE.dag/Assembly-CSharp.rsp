@@ -399,6 +399,7 @@
 "Assets/Scripts/Towers/Talents/Talent.cs"
 "Assets/Scripts/Towers/Tower.cs"
 "Assets/Scripts/Towers/TowerPlacer.cs"
+"Assets/Scripts/UI/LineDrawer.cs"
 "Assets/Scripts/UI/Text/FloatingGoldText.cs"
 "Assets/Scripts/UI/Text/PooledText.cs"
 "Assets/Scripts/UI/Text/TextAnimations.cs"

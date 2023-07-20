@@ -104,7 +104,7 @@ public class TileScript : MonoBehaviour
             GameManager.Instance.TowerPlacer.GhostTower.transform.position = ghostTowerPosition;
         }
 
-        if (Input.GetMouseButtonDown(0) && !GameManager.Instance.WaveOngoing)
+        if (Input.GetMouseButtonUp(0) && !GameManager.Instance.WaveOngoing)
         {
             if (Tower)
             {
@@ -115,6 +115,7 @@ public class TileScript : MonoBehaviour
                 PlaceTowerOnTile();
             }
         }
+
     }
 
 

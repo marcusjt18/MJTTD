@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class TowerUI : MonoBehaviour
@@ -21,24 +22,30 @@ public class TowerUI : MonoBehaviour
     [SerializeField]
     private TMP_Text talentPointsText;
 
+    private LineDrawer lineDrawer;
+
     private List<Talent> Talents = new List<Talent>();
-    private bool talentsAdded = false;
 
     private Tower currentTower;
     private TileScript currentTile;
 
+
+
     public Tower CurrentTower { get => currentTower; set => currentTower = value; }
+
+    private void Awake()
+    {
+        lineDrawer = GetComponentInChildren<LineDrawer>();
+        AddTalents();
+    }
 
     public void Show()
     {
-        gameObject.SetActive(true);
-
-        if (!talentsAdded)
-        {
-            AddTalents();
-        }
 
         UpdateTalents();
+        UpdateTalentLines();
+        UpdateTalentColors();
+        gameObject.SetActive(true);
     }
     public void Hide()
     {
@@ -50,8 +57,15 @@ public class TowerUI : MonoBehaviour
         damageText.text = $"Damage: {tower.ApplyMultiplierToDamage(tower.MinDamage)}-{tower.ApplyMultiplierToDamage(tower.MaxDamage)}";
         speedText.text = $"Attack cooldown: {tower.AttackSpeed}";
         rangeText.text = $"Range: {tower.Range}";
-        levelText.text = $"Level: {tower.Level}/{tower.MaxLevel}";
-        upgradePriceText.text = $"Upgrade price: {tower.UpgradeCost}";
+        levelText.text = $"Level: {tower.Level}/{tower.MaxLevel}";   
+        if(tower.Level >= tower.MaxLevel)
+        {
+            upgradePriceText.text = $"Upgrade price: --";
+        }
+        else
+        {
+            upgradePriceText.text = $"Upgrade price: {tower.UpgradeCost}";
+        }
         sellPriceText.text = $"Sell price: {tower.SellPrice}";
         talentPointsText.text = $"Talent points: {tower.TalentPoints}";
     }
@@ -60,8 +74,6 @@ public class TowerUI : MonoBehaviour
     {
         foreach (Talent talent in Talents)
         {
-            talent.Initialize();
-
             if (currentTower.TalentIds.Contains(talent.Id))
             {
                 talent.IsActivated = true;
@@ -71,7 +83,6 @@ public class TowerUI : MonoBehaviour
                 talent.IsActivated = false;
             }
             
-            talent.UpdateColor();
         }
     }
 
@@ -81,9 +92,12 @@ public class TowerUI : MonoBehaviour
         foreach (Talent t in talents)
         {
             Talents.Add(t);
+            t.Initialize(lineDrawer);
+            foreach (GameObject dependency in t.Dependencies)
+            {
+                lineDrawer.DrawLine(t.GetComponent<RectTransform>(), dependency.GetComponent<RectTransform>(), t.IsActivated && dependency.GetComponent<Talent>().IsActivated);
+            }
         }
-
-        talentsAdded = true;
 
     }
 
@@ -131,4 +145,23 @@ public class TowerUI : MonoBehaviour
         }
 
     }
+    public void UpdateTalentLines()
+    {
+        foreach (Talent talent in Talents)
+        {
+            foreach (GameObject dependency in talent.Dependencies)
+            {
+                lineDrawer.UpdateLineThickness(talent.GetComponent<RectTransform>(), dependency.GetComponent<RectTransform>(), talent.IsActivated && dependency.GetComponent<Talent>().IsActivated);
+            }
+        }
+    }
+
+    public void UpdateTalentColors()
+    {
+        foreach (Talent talent in Talents)
+        {
+            talent.UpdateColor();
+        }
+    }
+
 }

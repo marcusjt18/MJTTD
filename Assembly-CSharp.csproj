@@ -121,6 +121,7 @@
     <Compile Include="Assets\Scripts\Towers\Specific Towers\BasicTower.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\UI\Text\FloatingGoldText.cs" />
+    <Compile Include="Assets\Scripts\UI\LineDrawer.cs" />
     <Compile Include="Assets\Scripts\Monsters\MonsterPool.cs" />
     <Compile Include="Assets\Scripts\Towers\Talents\DamageMultiplierTalent.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />

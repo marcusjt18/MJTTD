@@ -139,7 +139,6 @@ public class UIManager : MonoBehaviour
         // Check if the tag exists in the dictionary
         if (towerUIDict.ContainsKey(tower.Id))
         {
-
             // We can deselect a tower if we show a ui, no need for the ghost tower while we look at ui
             GameManager.Instance.DeselectTower();
 
