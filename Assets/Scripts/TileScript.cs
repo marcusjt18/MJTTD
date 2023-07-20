@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+
 
 public class TileScript : MonoBehaviour
 {
@@ -84,6 +86,12 @@ public class TileScript : MonoBehaviour
 
     private void OnMouseOver()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            // If we're hovering over a UI element, we return early and don't proceed with the rest of the method
+            return;
+        }
+
         if (GameManager.Instance.TowerPlacer.GhostTower != null)
         {
             SpriteRenderer ghostTowerRenderer = GameManager.Instance.TowerPlacer.GhostTower.GetComponent<SpriteRenderer>();

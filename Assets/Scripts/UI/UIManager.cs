@@ -28,6 +28,8 @@ public class UIManager : MonoBehaviour
     private Coroutine healthShakeCoroutine;
     private Vector3 originalHealthTextPosition;
 
+    private TowerUI currentlyActiveTowerUI;
+
     private static UIManager instance;
 
     // Access the singleton instance of GameManager
@@ -136,6 +138,12 @@ public class UIManager : MonoBehaviour
 
     internal void ShowTowerUI(Tower tower, TileScript tile)
     {
+
+        if (currentlyActiveTowerUI)
+        {
+            currentlyActiveTowerUI.Hide();
+        }
+
         // Check if the tag exists in the dictionary
         if (towerUIDict.ContainsKey(tower.Id))
         {
@@ -147,6 +155,8 @@ public class UIManager : MonoBehaviour
             tui.SelectTileForUI(tile);
             tui.UpdateInfoText(tower);
             tui.Show();
+
+            currentlyActiveTowerUI = tui;
         }
         else
         {

@@ -164,4 +164,12 @@ public class TowerUI : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Hide();
+        }
+    }
+
 }
