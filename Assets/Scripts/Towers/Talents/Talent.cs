@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public abstract class Talent : MonoBehaviour
+public abstract class Talent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField]
     public List<GameObject> Dependencies = new List<GameObject>();
@@ -14,14 +15,14 @@ public abstract class Talent : MonoBehaviour
     [SerializeField]
     private int id;
 
-    private string name;
+    private string title;
     private string description;
 
     private TowerUI parentUI;
     public bool IsActivated { get;  set; }
     public int Id { get => id; set => id = value; }
     public string Description { get => description; set => description = value; }
-    public string Name { get => name; set => name = value; }
+    public string Title { get => title; set => title = value; }
 
     private bool initialized = false;
 
@@ -29,18 +30,20 @@ public abstract class Talent : MonoBehaviour
 
     private LineDrawer lineDrawer;
 
-    private void Start()
-    { 
+    private TalentTooltip tooltip;
 
-    }
-
+    private RectTransform rectTransform;
     public void Initialize(LineDrawer ld)
     {
         if (initialized) return;
 
+        rectTransform = GetComponent<RectTransform>();
+
         lineDrawer = ld;
 
         parentUI = GetComponentInParent<TowerUI>();
+
+        tooltip = parentUI.TalentTooltip;
 
         Image[] images = GetComponentsInChildren<Image>(true);
 
@@ -107,6 +110,8 @@ public abstract class Talent : MonoBehaviour
 
         parentUI.UpdateInfoText(tower);
         parentUI.UpdateTalentColors();
+
+        tooltip.UpdateAllocatedText(IsActivated);
     }
 
     public abstract void ApplyEffect(Tower tower);
@@ -129,6 +134,25 @@ public abstract class Talent : MonoBehaviour
             talentImage.color = Color.gray;
             borderImage.color = Color.red;
         }
+    }
+
+    public void initRectTransform()
+    {
+        if (rectTransform == null) rectTransform = GetComponent<RectTransform>();
+
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // Call Show on the tooltip
+        tooltip.SetTooltipText(Title, Description, IsActivated);
+        tooltip.Show(rectTransform.anchoredPosition + new Vector2(178, 116)); // offset here
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        // Call Hide on the tooltip
+        tooltip.Hide();
     }
 
 }

@@ -10,7 +10,7 @@ public class SplitshotTalent : Talent
 
     private void Awake()
     {
-        Name = "Split Shot";
+        Title = "Split Shot";
         Description = $"Fires an additional {extraProjectiles} projectiles.";
     }
 

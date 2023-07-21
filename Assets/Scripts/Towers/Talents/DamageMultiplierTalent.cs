@@ -9,7 +9,7 @@ public class DamageMultiplierTalent : Talent
 
     private void Awake()
     {
-        Name = "Damage Multiplier";
+        Title = "Damage Multiplier";
         Description = $"Increases base damage by {multi*100}%.";
     }
 

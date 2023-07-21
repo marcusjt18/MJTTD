@@ -28,10 +28,11 @@ public class TowerUI : MonoBehaviour
 
     private Tower currentTower;
     private TileScript currentTile;
-
-
+    [SerializeField]
+    private TalentTooltip talentTooltip;
 
     public Tower CurrentTower { get => currentTower; set => currentTower = value; }
+    public TalentTooltip TalentTooltip { get => talentTooltip; set => talentTooltip = value; }
 
     private void Awake()
     {
@@ -46,6 +47,7 @@ public class TowerUI : MonoBehaviour
         UpdateTalentLines();
         UpdateTalentColors();
         gameObject.SetActive(true);
+        //initTalentRectTransforms();
     }
     public void Hide()
     {
@@ -161,6 +163,14 @@ public class TowerUI : MonoBehaviour
         foreach (Talent talent in Talents)
         {
             talent.UpdateColor();
+        }
+    }
+
+    public void initTalentRectTransforms()
+    {
+        foreach (Talent talent in Talents)
+        {
+            talent.initRectTransform();
         }
     }
 
