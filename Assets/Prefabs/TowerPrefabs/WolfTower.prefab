@@ -75,8 +75,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278255615
+  m_fontColor: {r: 1, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -93,8 +93,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -290,6 +290,11 @@ MonoBehaviour:
   minDamage: 8
   maxDamage: 10
   prefab: {fileID: 4589795718836687180}
+  levelSprites:
+  - {fileID: 21300000, guid: baddd4e4f95b17b4998d7f2d0bbb323c, type: 3}
+  - {fileID: 21300000, guid: ea2cdd2cd7f754e46bc6ddbd2171a72b, type: 3}
+  - {fileID: 21300000, guid: 2c0ea00f2b2c5774c9a597599d1dc1a1, type: 3}
+  - {fileID: 21300000, guid: 2fe133a60cd3c094fba421ce83407be8, type: 3}
   projectileTag: 
   attackSpeed: 1.5
   cost: 20
@@ -370,7 +375,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b8af4f041d5b0ff47b8db01e36f8548e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 414339e31feff784ea6a5eeadaca8620, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -94,10 +94,11 @@ public abstract class Tower : MonoBehaviour
         CircleCollider2D circleCollider = GetComponent<CircleCollider2D>();
         circleCollider.radius = range;
 
-        SellPrice = Cost / 2;
-
         levelLabel = GetComponentInChildren<TMP_Text>();
-        UpdateLevelLabel();
+
+        LevelLabelSetActive(false);
+
+        SellPrice = Cost / 2;
     }
 
 
@@ -206,7 +207,6 @@ public abstract class Tower : MonoBehaviour
 
             SellPrice = UpgradeCost / 2;
             UpgradeCost *= 2;
-            UpdateLevelLabel();
         }
         else
         {
@@ -220,9 +220,12 @@ public abstract class Tower : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void UpdateLevelLabel()
+    public void LevelLabelSetActive(bool active)
     {
-        levelLabel.text = $"Lv. {level}";
+        if (active) levelLabel.text = $"Lv. {level}";
+        levelLabel.gameObject.SetActive(active);
     }
+
+
 }
 

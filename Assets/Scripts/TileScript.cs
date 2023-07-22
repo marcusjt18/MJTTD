@@ -82,6 +82,10 @@ public class TileScript : MonoBehaviour
         {
             GameManager.Instance.TowerPlacer.GhostTower.SetActive(false);
         }
+        if (Tower)
+        {
+            Tower.LevelLabelSetActive(false);
+        }
     }
 
     private void OnMouseOver()
@@ -90,6 +94,11 @@ public class TileScript : MonoBehaviour
         {
             // If we're hovering over a UI element, we return early and don't proceed with the rest of the method
             return;
+        }
+
+        if (Tower)
+        {
+            Tower.LevelLabelSetActive(true);
         }
 
         if (GameManager.Instance.TowerPlacer.GhostTower != null)
