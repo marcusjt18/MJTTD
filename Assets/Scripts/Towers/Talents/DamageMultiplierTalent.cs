@@ -10,7 +10,7 @@ public class DamageMultiplierTalent : Talent
     private void Awake()
     {
         Title = "Damage Multiplier";
-        Description = $"Increases base damage by {multi*100}%.";
+        Description = $"Increases damage multiplier by {multi*100}%.";
     }
 
     public override void ApplyEffect(Tower tower)

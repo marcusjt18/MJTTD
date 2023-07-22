@@ -93,7 +93,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3632149911770127556}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
@@ -151,10 +151,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: basic
-  range: 3
+  range: 4
   minDamage: 1
   maxDamage: 2
   prefab: {fileID: 3896741727868723008}
+  levelSprites:
+  - {fileID: 21300000, guid: 1d2f297e98ab76b4f8d064c3cb6f477a, type: 3}
+  - {fileID: 21300000, guid: 65c7aabaa15ff83409a293261a108e9a, type: 3}
+  - {fileID: 21300000, guid: 61b48f96bd1a6e5469531b07d6055db2, type: 3}
+  - {fileID: 21300000, guid: 1a85593869d76564d9904e447916b5ab, type: 3}
   projectileTag: basicArrow
   attackSpeed: 0.2
   cost: 10

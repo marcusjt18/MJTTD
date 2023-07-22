@@ -20,6 +20,11 @@ public abstract class Tower : MonoBehaviour
     [SerializeField]
     private GameObject prefab;
 
+    [SerializeField]
+    private Sprite[] levelSprites;  // This will hold your sprites. Set this in the Inspector.
+
+    private SpriteRenderer spriteRenderer;
+
     private TMP_Text levelLabel;
 
     [SerializeField]
@@ -32,7 +37,7 @@ public abstract class Tower : MonoBehaviour
     private float attackCooldown = 0.0f;
 
     private int level = 1;
-    private int maxLevel = 10;
+    private int maxLevel = 5;
 
     private Color[] levelColors = new Color[]
     {
@@ -84,6 +89,7 @@ public abstract class Tower : MonoBehaviour
 
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         CircleCollider2D circleCollider = GetComponent<CircleCollider2D>();
         circleCollider.radius = range;
@@ -184,25 +190,20 @@ public abstract class Tower : MonoBehaviour
         {
             Player.Instance.SpendGold(UpgradeCost);
 
-            // Apply color tinting
-            if (level < levelColors.Length)
-            {
-                GetComponent<SpriteRenderer>().color = levelColors[level];
-            }
-
-            if (level >= 7)
-            {
-                float scaleFactor = 1.06f;
-                transform.localScale *= scaleFactor;
-            }
-
             //increase damage in a sensible way
             minDamage *= 2;
             maxDamage = minDamage + (level * 2);
 
-            TalentPoints++;
+            TalentPoints += 3;
+
+            //change sprite
+            if (level <= levelSprites.Length)
+            {
+                spriteRenderer.sprite = levelSprites[level - 1];  // Set the sprite to the sprite at the new level
+            }
 
             level++;
+
             SellPrice = UpgradeCost / 2;
             UpgradeCost *= 2;
             UpdateLevelLabel();
